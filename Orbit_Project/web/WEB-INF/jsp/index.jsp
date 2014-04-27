@@ -24,10 +24,10 @@
             <a class="pure-menu-heading" href="#">Orbit Travel</a>
 
             <ul>
-                <li><a href="#">Home</a></li>
+                <li class="menu-item-divided pure-menu-selected"><a href="#">Home</a></li>
                 <li><a href="#">Flights</a></li>
 
-                <li class="menu-item-divided pure-menu-selected">
+                <li>
                     <a href="#">Accounts</a>
                 </li>
 
@@ -46,63 +46,91 @@
             
             <h2 class="content-subhead">Check out last minute flight</h2>
             
-            <form class="pure-form pure-form-stacked">
-                <fieldset>
-                    <legend>Book Flight</legend>
+            
+                        <form class="pure-form pure-form-stacked">
+                            <fieldset>
+                                <legend>Book Flight</legend>
+                                                                                                                     
+                                
+                                <div class="pure-g-r">
+                                    <div class="pure-u-1-3">                                                                                                                                                                                   
 
-                    <div class="pure-g">
-                        <div class="pure-u-1 pure-u-med-1-4">
-                            <label for="leaving-from">Leaving from</label>
-                            <input id="first-name" type="text">
-                        </div>
+                                        
+                                         <label for="one-way" class="pure-radio">                                                
+                                             <input id="one-way" type="radio" name="optionsRadios" value="option1" checked> One-Way                                        
+                                         </label>
+                                        
+                                        <div>&nbsp</div>
 
-                        <div class="pure-u-1 pure-u-med-1-4">
-                            <label for="going-to">Going to</label>
-                            <input id="last-name" type="text">
-                        </div>
+                                        
+                                        <div class="pure-g">
+                                            <div class="pure-u-1 pure-u-med-1-3">
+                                                <label for="leaving-from">Leaving from</label>
+                                                <input id="first-name" type="text">
+                                            </div>
 
-                        <div class="pure-u-1 pure-u-med-1-4">
-                            <label for="departing-on">Departing on</label>
-                            <input id="email" type="email">
-                        </div>
+                                            <div class="pure-u-1 pure-u-med-1-8">
+                                                <label for="going-to">Going to</label>
+                                                <input id="last-name" type="text">
+                                            </div>  
+                                        </div>      
+                                    </div>
 
-                        <div class="pure-u-1 pure-u-med-1-3">
-                            <label for="select-time">Select time</label>
-                            <select id="state" class="pure-input-1-2">
-                                <option>Lowest Fare</option>
-                                <option>Morning</option>
-                                <option>Afternoon</option>
-                                <option>Evening</option>
-                            </select>
-                        </div>
-                        
-                        <div class="pure-u-1 pure-u-med-1-3">
-                            <label for="arriving-on">Arriving on</label>
-                            <input id="city" type="text">
-                        </div>
+                               <div class="pure-u-1-3">
+                                   
+                                    <label for="round-trip" class="pure-radio">                                                
+                                        <input id="round-trip" type="radio" name="optionsRadios" value="option2"> Round-Trip                                       
+                                    </label>     
+                                   
+                                   <div>&nbsp</div>
+                                   
+                                    <div class="pure-u-1 pure-u-med-1-3">
+                                        <label for="departing-on">Departing on</label>
+                                        <input id="email" type="email">
+                                    </div>
+                                   
+                                   <div class="pure-u-1 pure-u-med-1-3">
+                                        <label for="arriving-on">Arriving on</label>
+                                        <input id="city" type="text">
+                                    </div>
+                               </div>
 
-                        <div class="pure-u-1 pure-u-med-1-2">
-                            <label for="select-time">Select time</label>
-                            <select id="state" class="pure-input-1-2">
-                                <option>Lowest Fare</option>
-                                <option>Morning</option>
-                                <option>Afternoon</option>
-                                <option>Evening</option>
-                            </select>
-                        </div>
-                    </div>
+                               <div class="pure-u-1-3">            
+                                                                      
+                                   <label for="multi-city" class="pure-radio">                                               
+                                       <input id="multi-city" type="radio" name="optionsRadios" value="option3"> Multi-Destination                                        
+                                   </label>
+                                   
+                                   <div>&nbsp</div>
+                                   
+                                   <div class="pure-u-1 pure-u-med-1-2">
+                                        <label for="select-time">Fare Options</label>
+                                        <select id="state" class="pure-input-1-2">
+                                            <option>Lowest Fare</option>
+                                            <option>Morning</option>
+                                            <option>Afternoon</option>
+                                            <option>Evening</option>
+                                        </select>
+                                    </div>
+                                </div>
 
-                    <label for="terms" class="pure-checkbox">
-                        <input id="terms" type="checkbox"> I've read the terms and conditions*
-                    </label>
                     
-                    <button type="submit" class="pure-button pure-button-primary">Find Flights</button>
-                </fieldset>
-            </form>
+                                </div>
+                                        
 
-            <h2 class="content-subhead">Most popular Flights</h2>
+                                <div>&nbsp</div>
+
+                                <button type="submit" class="pure-button pure-button-primary">Find Flights</button>
+                            </fieldset>
+                        </form>
+
+            <h2 class="content-subhead">We Love Travel</h2>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                     Welcome to Orbit Travel - Your Online Travel Agency!
+                     As one of the Btony Brook's leading online travel student website, we make it easy to plan your next business or leisure trip.                     
+                     Explore our site on mobile and Facebook page to discover destination ideas, get information about flights , then book and purchase your trip.
+                     Wherever you go, we're with you every step of the way!
+                     
             </p>
 
             <div class="pure-g">
@@ -120,9 +148,15 @@
                 </div>
             </div>
 
-            <h2 class="content-subhead">Try Resizing your Browser</h2>
+            <h2 class="content-subhead">Project Specification</h2>
             <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                The basic idea behind your on-line travel reservation system is that it will allow customers to use the web to browse/search the contents of your database (at least that part you want the customer to see) and to make flight reservations over the web. Your web site should allow users to make both domestic and international reservations. It should also allow users to query the database for available flights (direct or indirect) between a pair of cities for a given date and "approximate" time.
+
+                Your system should also support reverse auction, in which individuals specify the price they are willing to pay for a seat and the airlines either agree to sell it at that price or not. Reverse auction sites include priceline.com and expedia.com, a Microsoft-owned travel site that has a feature enabling customers to name their price.
+
+                Actual travel sites allow you to do a lot more than simply make flight reservations. For example, you can book a rental car or a hotel room. Due to time limitations, we will stick to flight reservations only this semester.
+
+                Your database system must be based on the specifications and requirements that follow.     
             </p>
         </div>
     </div>
