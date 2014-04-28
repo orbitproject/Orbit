@@ -1,3 +1,10 @@
+<%-- 
+    Document   : signup
+    Created on : Apr 27, 2014, 5:16:31 AM
+    Author     : RahulSarna
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <html lang="en">
 <head>
@@ -19,7 +26,7 @@
                 <span></span>
             </a>
 
-    <div id="menu">
+   <div id="menu">
         <div class="pure-menu pure-menu-open">
             <a class="pure-menu-heading" href="#">Orbit Travel</a>
 
@@ -42,86 +49,51 @@
 
         <div class="content">
             
-            <h2 class="content-subhead">Check out last minute flight</h2>
+            <h2 class="content-subhead">Sign up for Best Deals!</h2>
             
             
                         <form class="pure-form pure-form-stacked">
                             <fieldset>
-                                <legend>Book Flight</legend>
+                                <legend>Sign up with your email</legend>
                                                                                                                      
                                 
                                 <div class="pure-g-r">
                                     <div class="pure-u-1-3">                                                                                                                                                                                   
 
                                         
-                                         <label for="one-way" class="pure-radio">                                                
-                                             <input id="one-way" type="radio" name="optionsRadios" value="option1" checked> One-Way                                        
-                                         </label>
-                                        
-                                        <div>&nbsp</div>
-
-                                        
                                         <div class="pure-g">
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="leaving-from">Leaving from</label>
-                                                <input id="first-name" type="text">
+                                                <label for="username">Username/Email Address</label>
+                                                <input id="username" type="text">
                                             </div>
 
                                             <div class="pure-u-1 pure-u-med-1-8">
-                                                <label for="going-to">Going to</label>
-                                                <input id="last-name" type="text">
-                                            </div>  
+                                                <label for="password">Password</label>
+                                                <input id="password" type="password">
+                                            </div>
+                                            
+                                            <div class="pure-u-1 pure-u-med-1-8">
+                                                <label for="confirmPassword">Confirm Password</label>
+                                                <input id="password" type="password">
+                                            </div>                                            
+                                            
                                         </div>      
-                                    </div>
-
-                               <div class="pure-u-1-3">
-                                   
-                                    <label for="round-trip" class="pure-radio">                                                
-                                        <input id="round-trip" type="radio" name="optionsRadios" value="option2"> Round-Trip                                       
-                                    </label>     
-                                   
-                                   <div>&nbsp</div>
-                                   
-                                    <div class="pure-u-1 pure-u-med-1-3">
-                                        <label for="departing-on">Departing on</label>
-                                        <input id="email" type="email">
-                                    </div>
-                                   
-                                   <div class="pure-u-1 pure-u-med-1-3">
-                                        <label for="arriving-on">Arriving on</label>
-                                        <input id="city" type="text">
-                                    </div>
-                               </div>
-
-                               <div class="pure-u-1-3">            
-                                                                      
-                                   <label for="multi-city" class="pure-radio">                                               
-                                       <input id="multi-city" type="radio" name="optionsRadios" value="option3"> Multi-Destination                                        
-                                   </label>
-                                   
-                                   <div>&nbsp</div>
-                                   
-                                   <div class="pure-u-1 pure-u-med-1-2">
-                                        <label for="select-time">Fare Options</label>
-                                        <select id="state" class="pure-input-1-2">
-                                            <option>Lowest Fare</option>
-                                            <option>Morning</option>
-                                            <option>Afternoon</option>
-                                            <option>Evening</option>
-                                        </select>
-                                    </div>
+                                    </div>                                       
                                 </div>
-
-                    
-                                </div>
-                                        
+                                
+                                <button type="submit" class="pure-button pure-button-primary">Login</button>
 
                                 <div>&nbsp</div>
+                                
+                                <button class="pure-button pure-button-secondary">Sign Up!</button>
 
-                                <button type="submit" class="pure-button pure-button-primary">Find Flights</button>
+
                             </fieldset>
                         </form>
 
+            
+
+            
             <h2 class="content-subhead">We Love Travel</h2>
             <p>
                      Welcome to Orbit Travel - Your Online Travel Agency!
