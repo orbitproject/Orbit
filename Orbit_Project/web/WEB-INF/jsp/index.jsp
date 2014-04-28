@@ -9,9 +9,20 @@
 
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure.css">
         <link rel="stylesheet" href="css/layouts/side-menu.css">  
+        
+        
 </head>
     <body>
 
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>      
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+        <script src="js/ui.js"></script>
+        <script src="/js/orbitfunction.js"></script>
+  
         <div id="layout">
             <!-- Menu toggle -->
             <a href="#menu" id="menuLink" class="menu-link">
@@ -45,76 +56,78 @@
             <h2 class="content-subhead">Check out last minute flight</h2>
             
             
-                        <form class="pure-form pure-form-stacked">
+                        <form class="pure-form pure-form-stacked" method="POST" action="login">
                             <fieldset>
                                 <legend>Book Flight</legend>
                                                                                                                      
                                 
                                 <div class="pure-g-r">
+                                    
                                     <div class="pure-u-1-3">                                                                                                                                                                                   
 
                                         
                                          <label for="one-way" class="pure-radio">                                                
-                                             <input id="one-way" type="radio" name="optionsRadios" value="option1" checked> One-Way                                        
+                                             <input id="one-way" name='one-way' type="radio" name="optionsRadios" value="option1" checked> One-Way                                        
                                          </label>
                                         
-                                        <div>&nbsp</div>
-
-                                        
-                                        <div class="pure-g">
-                                            <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="leaving-from">Leaving from</label>
-                                                <input id="first-name" type="text">
-                                            </div>
-
-                                            <div class="pure-u-1 pure-u-med-1-8">
-                                                <label for="going-to">Going to</label>
-                                                <input id="last-name" type="text">
-                                            </div>  
-                                        </div>      
-                                    </div>
-
-                               <div class="pure-u-1-3">
-                                   
-                                    <label for="round-trip" class="pure-radio">                                                
+                                        <label for="round-trip" class="pure-radio">                                                
                                         <input id="round-trip" type="radio" name="optionsRadios" value="option2"> Round-Trip                                       
                                     </label>     
                                    
-                                   <div>&nbsp</div>
-                                   
-                                    <div class="pure-u-1 pure-u-med-1-3">
-                                        <label for="departing-on">Departing on</label>
-                                        <input id="email" type="email">
-                                    </div>
-                                   
-                                   <div class="pure-u-1 pure-u-med-1-3">
-                                        <label for="arriving-on">Arriving on</label>
-                                        <input id="city" type="text">
-                                    </div>
-                               </div>
-
-                               <div class="pure-u-1-3">            
-                                                                      
-                                   <label for="multi-city" class="pure-radio">                                               
-                                       <input id="multi-city" type="radio" name="optionsRadios" value="option3"> Multi-Destination                                        
+                                        <label for="multi-city" class="pure-radio">                                               
+                                       <input id="multi-city" name='multi-city' type="radio" name="optionsRadios" value="option3"> Multi-Destination                                        
                                    </label>
-                                   
-                                   <div>&nbsp</div>
-                                   
+                                                                                                                                                                                                                       
                                    <div class="pure-u-1 pure-u-med-1-2">
-                                        <label for="select-time">Fare Options</label>
-                                        <select id="state" class="pure-input-1-2">
+                                        <label for="select-fare">Fare Options</label>
+                                        <select id="select-fare" name='select-fare' class="pure-input-1-2">
                                             <option>Lowest Fare</option>
                                             <option>Morning</option>
                                             <option>Afternoon</option>
                                             <option>Evening</option>
                                         </select>
-                                    </div>
-                                </div>
-
+                                    
+                                   </div>
                     
                                 </div>
+                                                                            
                                         
+                                        <div>&nbsp</div>
+
+
+                                        
+                                        <div class="pure-u-1-3">                                                                                                                                                                                   
+
+                                        
+                                        <div class="pure-g">
+                                            <div class="pure-u-1 pure-u-med-1-3">
+                                                <label for="leaving-from">Leaving from</label>
+                                                <input id="leaving-from" name='leaving-from' type="text">
+                                            </div>
+
+                                            <div class="pure-u-1 pure-u-med-1-8">
+                                                <label for="going-to">Going to</label>
+                                                <input id="going-to" name='going-to' type="text">
+                                            </div>  
+                                        </div>      
+                                    </div>
+
+                               
+                                        <div class="pure-u-1-3">
+                                                                       
+                                             <div class="pure-u-1 pure-u-med-1-3">
+                                                 <label for="departing-on">Departing on</label>
+                                                 <input id="departing-on" name='departing-on' type="date">
+                                             </div>
+
+                                            <div class="pure-u-1 pure-u-med-1-3">
+                                                 <label for="arriving-on">Arriving on</label>
+                                                 <input id="arriving-on" name='arriving-on' type="date">
+                                             </div>
+                                        </div>                               
+                                     
+                                </div>
+                                
 
                                 <div>&nbsp</div>
 
@@ -159,8 +172,5 @@
         </div>
     </div>
 </div>
-
-<script src="js/ui.js"></script>
-
 </body>
 </html>
