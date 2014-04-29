@@ -60,15 +60,9 @@ public class SignupServlet extends HttpServlet {
         
         String telephone = request.getParameter("telephone");
         
-        String accountNo = request.getParameter("account-number");
-        
-        String dateCreated = request.getParameter("acccount-creation-date");
-        
         String creditCard = request.getParameter("credit-card");
         
         String pereferences = request.getParameter("preferences");
-        
-        String rating = request.getParameter("rating");
         
         System.out.println(username+" "+password+" "+firstname);
         
@@ -122,19 +116,12 @@ public class SignupServlet extends HttpServlet {
                     customerAccountNo = res.getInt("AccountNo") + 1;
                 }
                 
-                query = "INSERT INTO Customer VALUES(?,?,?,?,NOW(),?)";
+                query = "INSERT INTO Customer VALUES(?,?,?,?,NOW(),NULL)";
                 ps = conn.prepareStatement(query);
                 ps.setInt(1, personId);
                 ps.setInt(2, customerAccountNo);
                 ps.setString(3, creditCard);
                 ps.setString(4, username);
-                ps.setInt(5, Integer.parseInt(rating));
-                ps.executeUpdate();
-                
-                query = "INSERT INTO Passenger VALUES(?,?)";
-                ps = conn.prepareStatement(query);
-                ps.setInt(1, personId);
-                ps.setInt(2, customerAccountNo);
                 ps.executeUpdate();
                 
                 conn.commit();
