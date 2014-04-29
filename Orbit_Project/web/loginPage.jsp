@@ -16,9 +16,12 @@
 
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure.css">
         <link rel="stylesheet" href="css/layouts/side-menu.css">  
+        
 </head>
     <body>
 
+        <script src="js/orbitfunction.js"></script>
+        
         <div id="layout">
             <!-- Menu toggle -->
             <a href="#menu" id="menuLink" class="menu-link">
@@ -26,12 +29,15 @@
                 <span></span>
             </a>
 
-    <div id="menu">
+     <div id="menu">
         <div class="pure-menu pure-menu-open">
             <a class="pure-menu-heading" href="#">Orbit Travel</a>
 
-            <ul>
-                <li class="menu-item-divided pure-menu-selected"><a href="redirect.jsp">Home</a></li>
+            
+            <!--class="menu-item-divided pure-menu-selected"-->
+            
+            <ul id="menu-options">
+                <li><a href="redirect.jsp">Home</a></li>
                 <li><a href="#">Book Flight</a></li>
 
                 <li><a href="loginPage.jsp">Login</a></li>
@@ -70,7 +76,8 @@
                                             <div class="pure-u-1 pure-u-med-1-8">
                                                 <label for="password">Password</label>
                                                 <input id="password" type="password">
-                                            </div>  
+                                            </div> 
+                                            
                                         </div>      
                                     </div>                                       
                                 </div>

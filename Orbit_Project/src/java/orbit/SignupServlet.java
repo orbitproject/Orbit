@@ -57,7 +57,7 @@ public class SignupServlet extends HttpServlet {
            dispatcher.forward(request, response);
         }
         
-        String confirmPassword = request.getParameter("confirm-passowrd");
+        String confirmPassword = request.getParameter("confirm-password");
         
         if (confirmPassword.trim().equals(""))
         {
@@ -136,7 +136,7 @@ public class SignupServlet extends HttpServlet {
         String mysJDBCDriver = "com.mysql.jdbc.Driver";
         String mysURL = "jdbc:mysql://localhost:3306/cse_305_project_transactions?zeroDateTimeBehavior=convertToNull";
         String mysUserID = "root";
-        String mysPassword = "root";
+        String mysPassword = "";
         Connection conn=null;
         try {
                 Class.forName(mysJDBCDriver).newInstance();

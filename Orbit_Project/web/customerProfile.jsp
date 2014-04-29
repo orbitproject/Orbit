@@ -26,15 +26,12 @@
                 <span></span>
             </a>
 
-    <div id="menu">
+   <div id="menu">
         <div class="pure-menu pure-menu-open">
             <a class="pure-menu-heading" href="#">Orbit Travel</a>
 
-            
-            <!--class="menu-item-divided pure-menu-selected"-->
-            
-            <ul id="menu-options">
-                <li><a href="redirect.jsp">Home</a></li>
+            <ul>
+                <li class="menu-item-divided pure-menu-selected"><a href="redirect.jsp">Home</a></li>
                 <li><a href="#">Book Flight</a></li>
 
                 <li><a href="loginPage.jsp">Login</a></li>
@@ -67,52 +64,46 @@
                                             <div class="pure-u-1-3">                                                                                                                                                                                   
                                             
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="username">Username/Email Address*</label>
-                                                <input id="username" name="username" type="text" required>
-                                            </div>
-
-                                            <div class="pure-u-1 pure-u-med-1-8">
-                                                <label for="password">Password*</label>
-                                                <input id="password" name="password" type="password" required>
-                                            </div>
-                                            
-                                            <div class="pure-u-1 pure-u-med-1-8">
-                                                <label for="confirmPassword">Confirm Password*</label>
-                                                <input id="confirm-password" name='confirm-password' type="password" required>
-                                            </div>                                            
-                                            
+                                                <label for="username">Username/Email Address</label>
+                                                <input id="username" name="username" type="text">
+                                            </div>                                           
+                                                                                            
+                                                <div class="pure-u-1 pure-u-med-1-8">
+                                                    <label for="password">Password</label>
+                                                    <input id="password" type="password">                                            
+                                                </div>                                                  
                                             </div>
                                                                                         
                                             <div class="pure-u-1-3">                                                                                                                                                                                   
  
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="first-name">First Name*</label>
-                                                <input id="first-name" name='first-name' type="text" required>
+                                                <label for="first-name">First Name</label>
+                                                <input id="first-name" name='first-name' type="text">
                                             </div>
                                             
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="last-name">Last Name*</label>
-                                                <input id="last-name" name='last-name' type="text" required>
+                                                <label for="last-name">Last Name</label>
+                                                <input id="last-name" name='last-name' type="text">
                                             </div>
                                             
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="address">Address*</label>
-                                                <input id="address" name='address' type="text" required>
+                                                <label for="address">Address</label>
+                                                <input id="address" name='address' type="text">
                                             </div>
                                             
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="city">City*</label>
-                                                <input id="city" name='city' type="text" required>
+                                                <label for="city">City</label>
+                                                <input id="city" name='city' type="text">
                                             </div>
                                                 
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="state">State*</label>
-                                                <input id="state" name='state' type="text" required>
+                                                <label for="state">State</label>
+                                                <input id="state" name='state' type="text">
                                             </div>
                                             
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="zip-code">Zip Code*</label>
-                                                <input id="zip-code" name='zip' type="text" required>
+                                                <label for="zip-code">Zip Code</label>
+                                                <input id="zip-code" name='zip' type="text">
                                             </div>
                                             
                                             <div class="pure-u-1 pure-u-med-1-3">
@@ -122,34 +113,17 @@
                                             
                                             </div>
                                             
-
-
                                             <div class="pure-u-1-3">                                                                                                                                                                                   
-
-<!--                                            <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="account-number">Account Number</label>
-                                                <input id="account-number" name='account-number' type="text">
-                                            </div>
                                             
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="account-creation-date">Date Created</label>
-                                                <input id="account-creation-date" name="account-creation-date" type="date">
-                                            </div>-->
-                                            
-                                            <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="credit-card">Credit Card*</label>
-                                                <input id="credit-card" name='credit-card' type="text" required>
+                                                <label for="credit-card">Credit Card</label>
+                                                <input id="credit-card" name='credit-card' type="text">
                                             </div>
                                             
                                             <div class="pure-u-1 pure-u-med-1-3">
                                                 <label for="preferences">Preferences</label>
                                                 <input id="preferences" name='preferences' type="text">
                                             </div>
-                                            
-<!--                                            <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="rating">Rating</label>
-                                                <input id="rating" name='rating' type="text">
-                                            </div>-->
                                             
                                             </div>
                                             
@@ -159,8 +133,7 @@
                     
                      <div>&nbsp</div>
                                 
-                                <button type="submit" class="pure-button pure-button-primary">Create Account!</button>
-                                <span id="errorMessage" style="color:red">${requestScope.errorMessage}</span>
+                                <button type="submit" class="pure-button pure-button-primary">Save Account Changes!</button>
                         </form>
 
             

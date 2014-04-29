@@ -21,7 +21,7 @@
         <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
         <script src="js/ui.js"></script>
-        <script src="/js/orbitfunction.js"></script>
+        <script src="js/orbitfunction.js"></script>
   
         <div id="layout">
             <!-- Menu toggle -->
@@ -34,8 +34,11 @@
         <div class="pure-menu pure-menu-open">
             <a class="pure-menu-heading" href="#">Orbit Travel</a>
 
-            <ul>
-                <li class="menu-item-divided pure-menu-selected"><a href="redirect.jsp">Home</a></li>
+            
+            <!--class="menu-item-divided pure-menu-selected"-->
+            
+            <ul id="menu-options">
+                <li><a href="redirect.jsp">Home</a></li>
                 <li><a href="#">Book Flight</a></li>
 
                 <li><a href="loginPage.jsp">Login</a></li>
@@ -56,7 +59,7 @@
             <h2 class="content-subhead">Check out last minute flight</h2>
             
             
-                        <form class="pure-form pure-form-stacked" method="POST" action="login">
+                        <form class="pure-form pure-form-stacked" method="POST" action="">
                             <fieldset>
                                 <legend>Book Flight</legend>
                                                                                                                      
