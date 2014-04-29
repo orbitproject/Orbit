@@ -64,17 +64,17 @@
                                             <div class="pure-u-1-3">                                                                                                                                                                                   
                                             
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="username">Username/Email Address</label>
+                                                <label for="username">Username/Email Address*</label>
                                                 <input id="username" name="username" type="text">
                                             </div>
 
                                             <div class="pure-u-1 pure-u-med-1-8">
-                                                <label for="password">Password</label>
+                                                <label for="password">Password*</label>
                                                 <input id="password" name="password" type="password">
                                             </div>
                                             
                                             <div class="pure-u-1 pure-u-med-1-8">
-                                                <label for="confirmPassword">Confirm Password</label>
+                                                <label for="confirmPassword">Confirm Password*</label>
                                                 <input id="confirm-password" name='confirm-password' type="password">
                                             </div>                                            
                                             
@@ -83,32 +83,32 @@
                                             <div class="pure-u-1-3">                                                                                                                                                                                   
  
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="first-name">First Name</label>
+                                                <label for="first-name">First Name*</label>
                                                 <input id="first-name" name='first-name' type="text">
                                             </div>
                                             
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="last-name">Last Name</label>
+                                                <label for="last-name">Last Name*</label>
                                                 <input id="last-name" name='last-name' type="text">
                                             </div>
                                             
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="address">Address</label>
+                                                <label for="address">Address*</label>
                                                 <input id="address" name='address' type="text">
                                             </div>
                                             
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="city">City</label>
+                                                <label for="city">City*</label>
                                                 <input id="city" name='city' type="text">
                                             </div>
                                                 
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="state">State</label>
+                                                <label for="state">State*</label>
                                                 <input id="state" name='state' type="text">
                                             </div>
                                             
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="zip-code">Zip Code</label>
+                                                <label for="zip-code">Zip Code*</label>
                                                 <input id="zip-code" name='zip' type="text">
                                             </div>
                                             
@@ -134,7 +134,7 @@
                                             </div>
                                             
                                             <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="credit-card">Credit Card</label>
+                                                <label for="credit-card">Credit Card*</label>
                                                 <input id="credit-card" name='credit-card' type="text">
                                             </div>
                                             
@@ -157,6 +157,7 @@
                      <div>&nbsp</div>
                                 
                                 <button type="submit" class="pure-button pure-button-primary">Create Account!</button>
+                                <span id="errorMessage" style="color:red">${requestScope.errorMessage}</span>
                         </form>
 
             

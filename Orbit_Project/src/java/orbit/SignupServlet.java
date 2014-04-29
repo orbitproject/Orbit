@@ -14,6 +14,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Properties;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -38,29 +39,95 @@ public class SignupServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/signup.jsp");
         
         String username = request.getParameter("username");
         
+        if (username.trim().equals(""))
+        {
+           request.setAttribute("errorMessage", "Please enter a username.");
+           dispatcher.forward(request, response);
+        }
+        
         String password = request.getParameter("password");
         
+        if (password.trim().equals(""))
+        {
+           request.setAttribute("errorMessage", "Please enter a password.");
+           dispatcher.forward(request, response);
+        }
+        
         String confirmPassword = request.getParameter("confirm-passowrd");
+        
+        if (confirmPassword.trim().equals(""))
+        {
+           request.setAttribute("errorMessage", "Please re-enter your password.");
+           dispatcher.forward(request, response);
+        }
+        
+        if (!password.equals(confirmPassword))
+        {
+           request.setAttribute("errorMessage", "Passwords must match.");
+           dispatcher.forward(request, response);
+        }
                 
         String firstname = request.getParameter("first-name");
         
+        if (firstname.trim().equals(""))
+        {
+           request.setAttribute("errorMessage", "Please enter your first name.");
+           dispatcher.forward(request, response);
+        }
+        
         String lastname = request.getParameter("last-name");
+        
+        if (lastname.trim().equals(""))
+        {
+           request.setAttribute("errorMessage", "Please enter your last name.");
+           dispatcher.forward(request, response);
+        }
         
         String address = request.getParameter("address");
         
+        if (address.trim().equals(""))
+        {
+           request.setAttribute("errorMessage", "Please enter your address.");
+           dispatcher.forward(request, response);
+        }
+        
         String city = request.getParameter("city");
+        
+        if (city.trim().equals(""))
+        {
+           request.setAttribute("errorMessage", "Please enter your city.");
+           dispatcher.forward(request, response);
+        }
         
         String state = request.getParameter("state");
         
+        if (state.trim().equals(""))
+        {
+           request.setAttribute("errorMessage", "Please enter your state.");
+           dispatcher.forward(request, response);
+        }
+        
         String zip = request.getParameter("zip");
+        
+        if (zip.trim().equals(""))
+        {
+           request.setAttribute("errorMessage", "Please enter your zipcode.");
+           dispatcher.forward(request, response);
+        }
         
         String telephone = request.getParameter("telephone");
         
         String creditCard = request.getParameter("credit-card");
+        
+        if (creditCard.trim().equals(""))
+        {
+           request.setAttribute("errorMessage", "Please enter your credit card number.");
+           dispatcher.forward(request, response);
+        }
         
         String pereferences = request.getParameter("preferences");
         
