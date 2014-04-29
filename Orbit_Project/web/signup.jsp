@@ -101,6 +101,11 @@
                                                 <label for="city">City</label>
                                                 <input id="city" name='city' type="text">
                                             </div>
+                                                
+                                            <div class="pure-u-1 pure-u-med-1-3">
+                                                <label for="state">State</label>
+                                                <input id="state" name='state' type="text">
+                                            </div>
                                             
                                             <div class="pure-u-1 pure-u-med-1-3">
                                                 <label for="zip-code">Zip Code</label>

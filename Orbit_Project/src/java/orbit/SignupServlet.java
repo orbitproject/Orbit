@@ -8,6 +8,12 @@ package orbit;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Properties;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -48,6 +54,8 @@ public class SignupServlet extends HttpServlet {
         
         String city = request.getParameter("city");
         
+        String state = request.getParameter("state");
+        
         String zip = request.getParameter("zip");
         
         String telephone = request.getParameter("telephone");
@@ -63,6 +71,79 @@ public class SignupServlet extends HttpServlet {
         String rating = request.getParameter("rating");
         
         System.out.println(username+" "+password+" "+firstname);
+        
+        String mysJDBCDriver = "com.mysql.jdbc.Driver";
+        String mysURL = "jdbc:mysql://localhost:3306/cse_305_project_transactions?zeroDateTimeBehavior=convertToNull";
+        String mysUserID = "root";
+        String mysPassword = "root";
+        Connection conn=null;
+        try {
+                Class.forName(mysJDBCDriver).newInstance();
+                Properties sysprops=System.getProperties();
+                sysprops.put("user",mysUserID);
+                sysprops.put("password",mysPassword);
+
+                //connect to the database
+                conn = DriverManager.getConnection(mysURL,sysprops);
+                System.out.println("Connected successfully to database using JConnect");
+
+                /*?*/conn.setAutoCommit(false);
+                
+                String query = "SELECT * FROM Person";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet res = ps.executeQuery();
+                int personId = 1;
+                
+                if (res.next())
+                {
+                    res.last();
+                    personId = res.getInt("Id") + 1;
+                }
+                
+                query = "INSERT INTO Person VALUES(?,?,?,?,?,?,?)";
+                ps = conn.prepareStatement(query);
+                ps.setInt(1, personId);
+                ps.setString(2, firstname);
+                ps.setString(3, lastname);
+                ps.setString(4, address);
+                ps.setString(5, city);
+                ps.setString(6, state);
+                ps.setInt(7, Integer.parseInt(zip));
+                ps.executeUpdate();
+                
+                query = "SELECT * FROM Customer";
+                ps = conn.prepareStatement(query);
+                res = ps.executeQuery();
+                int customerAccountNo = 1;
+                
+                if (res.next())
+                {
+                    res.last();
+                    customerAccountNo = res.getInt("AccountNo") + 1;
+                }
+                
+                query = "INSERT INTO Customer VALUES(?,?,?,?,NOW(),?)";
+                ps = conn.prepareStatement(query);
+                ps.setInt(1, personId);
+                ps.setInt(2, customerAccountNo);
+                ps.setString(3, creditCard);
+                ps.setString(4, username);
+                ps.setInt(5, Integer.parseInt(rating));
+                ps.executeUpdate();
+                
+                query = "INSERT INTO Passenger VALUES(?,?)";
+                ps = conn.prepareStatement(query);
+                ps.setInt(1, personId);
+                ps.setInt(2, customerAccountNo);
+                ps.executeUpdate();
+                
+                conn.commit();
+        } catch(Exception e){
+                e.printStackTrace();
+        }
+        finally{
+                try{conn.close();}catch(Exception ee){};
+        }
         
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
