@@ -116,12 +116,13 @@ public class SignupServlet extends HttpServlet {
                     customerAccountNo = res.getInt("AccountNo") + 1;
                 }
                 
-                query = "INSERT INTO Customer VALUES(?,?,?,?,NOW(),NULL)";
+                query = "INSERT INTO Customer VALUES(?,?,?,?,NOW(),NULL,?)";
                 ps = conn.prepareStatement(query);
                 ps.setInt(1, personId);
                 ps.setInt(2, customerAccountNo);
                 ps.setString(3, creditCard);
                 ps.setString(4, username);
+                ps.setString(5, password);
                 ps.executeUpdate();
                 
                 conn.commit();
