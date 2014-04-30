@@ -58,7 +58,7 @@
             <h2 class="content-subhead">Sign in or Select an option</h2>
             
             
-                        <form class="pure-form pure-form-stacked">
+                        <form class="pure-form pure-form-stacked" method="POST" action='login'>
                             <fieldset>
                                 <legend>Sign in with your email</legend>
                                                                                                                      
@@ -70,12 +70,12 @@
                                         <div class="pure-g">
                                             <div class="pure-u-1 pure-u-med-1-3">
                                                 <label for="username">Email Address</label>
-                                                <input id="username" type="text">
+                                                <input id="username" name="username" type="text">
                                             </div>
 
                                             <div class="pure-u-1 pure-u-med-1-8">
                                                 <label for="password">Password</label>
-                                                <input id="password" type="password">
+                                                <input id="password" name="password" type="password">
                                             </div> 
                                             
                                         </div>      
@@ -84,10 +84,10 @@
                                 
                                 <button type="submit" class="pure-button pure-button-primary">Login</button>
 
-                                <div>&nbsp</div>
+                                &nbsp;
                                 
                                 <button class="pure-button pure-button-secondary">Sign Up!</button>
-
+                                <div id="loginError" style="color:red">${requestScope.errorMessage}</div>
 
                             </fieldset>
                         </form>

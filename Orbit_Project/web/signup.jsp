@@ -160,7 +160,7 @@
                      <div>&nbsp</div>
                                 
                                 <button type="submit" class="pure-button pure-button-primary">Create Account!</button>
-                                <span id="errorMessage" style="color:red">${requestScope.errorMessage}</span>
+                                <span id="signupError" style="color:red">${requestScope.errorMessage}</span>
                         </form>
 
             

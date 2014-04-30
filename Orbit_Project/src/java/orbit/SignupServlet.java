@@ -37,8 +37,6 @@ public class SignupServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/signup.jsp");
         
         String username = request.getParameter("username");
@@ -136,7 +134,7 @@ public class SignupServlet extends HttpServlet {
         String mysJDBCDriver = "com.mysql.jdbc.Driver";
         String mysURL = "jdbc:mysql://localhost:3306/cse_305_project_transactions?zeroDateTimeBehavior=convertToNull";
         String mysUserID = "root";
-        String mysPassword = "";
+        String mysPassword = "root";
         Connection conn=null;
         try {
                 Class.forName(mysJDBCDriver).newInstance();
@@ -148,7 +146,7 @@ public class SignupServlet extends HttpServlet {
                 conn = DriverManager.getConnection(mysURL,sysprops);
                 System.out.println("Connected successfully to database using JConnect");
 
-                /*?*/conn.setAutoCommit(false);
+                conn.setAutoCommit(false);
                 
                 String query = "SELECT * FROM Person";
                 PreparedStatement ps = conn.prepareStatement(query);
@@ -200,6 +198,7 @@ public class SignupServlet extends HttpServlet {
                 try{conn.close();}catch(Exception ee){};
         }
         
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");

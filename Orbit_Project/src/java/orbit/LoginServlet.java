@@ -8,10 +8,17 @@ package orbit;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Properties;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -30,6 +37,64 @@ public class LoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+                
+        RequestDispatcher dispatcher;
+        
+        String username = request.getParameter("username");
+        
+        String password = request.getParameter("password");
+        
+        String mysJDBCDriver = "com.mysql.jdbc.Driver";
+        String mysURL = "jdbc:mysql://localhost:3306/cse_305_project_transactions?zeroDateTimeBehavior=convertToNull";
+        String mysUserID = "root";
+        String mysPassword = "root";
+        Connection conn=null;
+        try {
+                Class.forName(mysJDBCDriver).newInstance();
+                Properties sysprops=System.getProperties();
+                sysprops.put("user",mysUserID);
+                sysprops.put("password",mysPassword);
+
+                //connect to the database
+                conn = DriverManager.getConnection(mysURL,sysprops);
+                System.out.println("Connected successfully to database using JConnect");
+
+                conn.setAutoCommit(false);
+                
+                String query = "SELECT * FROM Customer WHERE Email = ?";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ps.setString(1, username);
+                ResultSet res = ps.executeQuery();
+                
+                if (res.next())
+                {
+                    if (res.getString("Password").equals(password))
+                    {
+                        session.setAttribute("login", username);
+                        dispatcher = getServletContext().getRequestDispatcher("/index.htm");
+                        dispatcher.forward(request, response);
+                    }
+                    else
+                    {
+                        request.setAttribute("errorMessage", "Incorrect password.");
+                        dispatcher = getServletContext().getRequestDispatcher("/loginPage.jsp");
+                        dispatcher.forward(request, response);
+                    }
+                }
+                else
+                {
+                    request.setAttribute("errorMessage", "User does not exist.");
+                    dispatcher = getServletContext().getRequestDispatcher("/loginPage.jsp");
+                    dispatcher.forward(request, response);
+                }
+        } catch(Exception e){
+                e.printStackTrace();
+        }
+        finally{
+                try{conn.close();}catch(Exception ee){};
+        }
+        
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
