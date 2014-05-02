@@ -12,13 +12,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Orbit Travel Reservation System Website for CSE 305">
 
-    <title>Orbit Travel Reservation &ndash; CSE 305 Project</title>
-
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure.css">
+    <title>Orbit Travel Reservation &ndash; CSE 305 Project</title>     
+    
+     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure.css">
         <link rel="stylesheet" href="css/layouts/side-menu.css">  
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>      
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+        <script src="js/ui.js"></script>
+        <script src="js/orbitfunction.js"></script>  
+    
 </head>
     <body>
 
+        
+        
         <div id="layout">
             <!-- Menu toggle -->
             <a href="#menu" id="menuLink" class="menu-link">

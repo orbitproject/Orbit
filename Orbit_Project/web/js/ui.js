@@ -1,4 +1,4 @@
-(function (window, document) {
+window.onload =(function () {
 
     var layout   = document.getElementById('layout'),
         menu     = document.getElementById('menu'),
@@ -32,4 +32,4 @@
         toggleClass(menuLink, active);
     };
 
-}(this, this.document));
+});

@@ -17,6 +17,10 @@
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure.css">
         <link rel="stylesheet" href="css/layouts/side-menu.css">  
 </head>
+
+
+
+
     <body>
 
         <div id="layout">
@@ -30,13 +34,15 @@
         <div class="pure-menu pure-menu-open">
             <a class="pure-menu-heading" href="#">Orbit Travel</a>
 
-            <ul>
+            <!--class="menu-item-divided pure-menu-selected"-->
+            
+            <ul id="menu-options">
                 <li class="menu-item-divided pure-menu-selected"><a href="redirect.jsp">Home</a></li>
-                <li><a href="#">Book Flight</a></li>
+                <li class="menu-item-divided pure-menu-unselected"><a href="#">Book Flight</a></li>
 
-                <li><a href="loginPage.jsp">Login</a></li>
+                <li class="menu-item-divided pure-menu-unselected"><a href="loginPage.jsp">Login</a></li>
 
-                <li><a href="signup.jsp">Sign Up</a></li>
+                <li class="menu-item-divided pure-menu-unselected"><a href="signup.jsp">Sign Up</a></li>
             </ul>
         </div>
     </div>
