@@ -37,6 +37,7 @@ public class LoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         HttpSession session = request.getSession();
                 
         RequestDispatcher dispatcher;
@@ -48,7 +49,7 @@ public class LoginServlet extends HttpServlet {
         String mysJDBCDriver = "com.mysql.jdbc.Driver";
         String mysURL = "jdbc:mysql://localhost:3306/cse_305_project_transactions?zeroDateTimeBehavior=convertToNull";
         String mysUserID = "root";
-        String mysPassword = "root";
+        String mysPassword = "";
         Connection conn=null;
         try {
                 Class.forName(mysJDBCDriver).newInstance();

@@ -59,7 +59,7 @@
                     <h2 class="content-subhead">Check out last minute flight</h2>
 
 
-                    <form id="flight-home" class="pure-form pure-form-stacked" method="POST" action="">
+                    <form id="flight-home" class="pure-form pure-form-stacked" method="POST" action="flightdata">
                         <fieldset>
                             <legend>Book Flight</legend>
 
@@ -69,15 +69,15 @@
                                 <div class="pure-u-1-3">                                                                                                                                                                                   
 
                                     <label for="option-one" class="pure-radio">                                                
-                                                <input id="option-one" type="radio" name="optionsRadios" value="one-way" checked> One-Way                                        
+                                                <input id="one-way" type="radio" name="optionsRadios" value="one-way" checked> One-Way                                        
                                     </label>
 
                                     <label for="option-two" class="pure-radio">                                                
-                                                <input id="option-two" type="radio" name="optionsRadios" value="round-trip"> Round-Trip                                       
+                                                <input id="round-trip" type="radio" name="optionsRadios" value="round-trip"> Round-Trip                                       
                                     </label>     
 
                                     <label for="option-three" class="pure-radio">                                               
-                                                <input id="option-three" type="radio" name="optionsRadios" value="multi-city"> Multi-Destination                                        
+                                                <input id="multi-city" type="radio" name="optionsRadios" value="multi-city"> Multi-Destination                                        
                                     </label>
 
                                     <div class="pure-u-1 pure-u-med-1-2">
@@ -131,7 +131,7 @@
                             </div>
 
 
-                            <div>&nbsp</div><div>&nbsp</div>
+                            <div>&nbsp</div>
                             
                                 <div id="multi-source" class="pure-g-r">
                                     
@@ -146,6 +146,78 @@
                         </fieldset>
                     </form>
 
+                    <table id="flight-data" class="pure-table">
+                        
+                        
+                        <thead>
+        <tr>
+            <th>#</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Year</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr class="pure-table-odd">
+            <td>1</td>
+            <td>Honda</td>
+            <td>Accord</td>
+            <td>2009</td>
+        </tr>
+
+        <tr>
+            <td>2</td>
+            <td>Toyota</td>
+            <td>Camry</td>
+            <td>2012</td>
+        </tr>
+
+        <tr class="pure-table-odd">
+            <td>3</td>
+            <td>Hyundai</td>
+            <td>Elantra</td>
+            <td>2010</td>
+        </tr>
+
+        <tr>
+            <td>4</td>
+            <td>Ford</td>
+            <td>Focus</td>
+            <td>2008</td>
+        </tr>
+
+        <tr class="pure-table-odd">
+            <td>5</td>
+            <td>Nissan</td>
+            <td>Sentra</td>
+            <td>2011</td>
+        </tr>
+
+        <tr>
+            <td>6</td>
+            <td>BMW</td>
+            <td>M3</td>
+            <td>2009</td>
+        </tr>
+
+        <tr class="pure-table-odd">
+            <td>7</td>
+            <td>Honda</td>
+            <td>Civic</td>
+            <td>2010</td>
+        </tr>
+
+        <tr>
+            <td>8</td>
+            <td>Kia</td>
+            <td>Soul</td>
+            <td>2010</td>
+        </tr>
+    </tbody>
+                        
+                    </table>
+                    
                     <h2 class="content-subhead">We Love Travel</h2>
                     <p>
                         Welcome to Orbit Travel - Your Online Travel Agency!

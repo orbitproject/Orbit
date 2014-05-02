@@ -72,7 +72,7 @@ function makeRequest(request, response) {
 
             response($.map(airports, function(item) {
                 return {
-                    label: item.code, //+ (item.name ? ", " + item.location : "") + ", " + item.location,
+                    label: item.code + (item.name ? ", " + item.location : "") + ", " + item.location,
                     value: item.code
                 };
             }));
