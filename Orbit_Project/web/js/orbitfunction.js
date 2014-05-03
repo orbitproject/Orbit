@@ -1,13 +1,6 @@
 $(document).ready(function() {
     
-    
-//    
-//    $("#departing-on").val(new Date());
-//    
-//    $('ul#menu li').click(function() {
-//        $('li.menu-item-divided pure-menu-selected').removeClass('menu-item-divided pure-menu-selected');
-//        $(this).addClass('menu-item-divided pure-menu-selected');
-//    });    
+ 
     
     var i = 1;
 
@@ -50,10 +43,69 @@ $(document).ready(function() {
         }
     });
     
-    $("#leaving-from").autocomplete({
-        source: makeRequest,     
+//    $("#leaving-from").autocomplete({
+//        source: makeRequest,     
+//     
+//    });
+    
+        
+    $.ajax({
+	    type: 'post',
+	    url: 'airportcode',
+	    dataType: 'text',
+	    success: function(jsonData) {
+	    	
+                
+	    	var parsedJSON = jQuery.parseJSON(jsonData);
+	    	var data = parsedJSON.data[0];	    
+                
+	    	var data1 = [];
+	    	
+                              
+	    	for(var i=0;i<parsedJSON.data.length;i++)        			    	
+	    		data1.push(parsedJSON.data[i].airlineID);
+    	    
+	    	var NoResultsLabel = "No Results";
+                
+
+	    	
+	    	$( "#leaving-from" ).autocomplete({
+
+	        	minLength: 0,
+	        	source: function(request, response) {
+	                var results = $.ui.autocomplete.filter(data1, request.term);
+
+	                if (!results.length) {
+	                    results = [NoResultsLabel];
+	                }
+
+	                response(results);
+	            }
+	        	
+	        });    
+                
+                $( "#going-to" ).autocomplete({
+
+	        	minLength: 0,
+	        	source: function(request, response) {
+	                var results = $.ui.autocomplete.filter(data1, request.term);
+
+	                if (!results.length) {
+	                    results = [NoResultsLabel];
+	                }
+
+	                response(results);
+	            }
+	        	
+	        });    
+                
+	    },
+            
+	    error: function(jsonData) {
+	        alert('Error displaying flights' + jsonData);
+	    }
+  });
      
-    });
 });
 
 function makeRequest(request, response) {

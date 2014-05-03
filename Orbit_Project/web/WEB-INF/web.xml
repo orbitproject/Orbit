@@ -28,6 +28,11 @@
         <servlet-name>FlightListServlet</servlet-name>
         <servlet-class>orbit.FlightListServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AirportCodeServlet</servlet-name>
+        <servlet-class>orbit.AirportCodeServlet</servlet-class>
+    </servlet>
+    
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -47,6 +52,10 @@
     <servlet-mapping>
         <servlet-name>FlightListServlet</servlet-name>
         <url-pattern>/flightlist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AirportCodeServlet</servlet-name>
+        <url-pattern>/airportcode</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -6,16 +6,17 @@
 
 package orbit;
 
-import Database.FlightListing;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +25,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author RahulSarna
  */
-public class FlightDataServlet extends HttpServlet {
+@WebServlet(name = "AirportCodeServlet", urlPatterns = {"/airportcode"})
+public class AirportCodeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,60 +40,59 @@ public class FlightDataServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        
+        List<String> jsonData = new ArrayList();
+        
+        String json = "";
+           
+        String mysJDBCDriver = "com.mysql.jdbc.Driver";
+        String mysURL = "jdbc:mysql://localhost:3306/cse_305_project_transactions?zeroDateTimeBehavior=convertToNull";
+        String mysUserID = "root";
+        String mysPassword = "";
+        Connection conn=null;
+        
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
          
-         if(request.getParameter("optionsRadios").equals("one-way")){
-             
-             
-                RequestDispatcher dispatcher;
-                String mysJDBCDriver = "com.mysql.jdbc.Driver";
-                String mysURL = "jdbc:mysql://localhost:3306/cse_305_project_transactions?zeroDateTimeBehavior=convertToNull";
-                String mysUserID = "root";
-                String mysPassword = "";
-                Connection conn = null;
+        try {
+                Class.forName(mysJDBCDriver).newInstance();
+                Properties sysprops=System.getProperties();
+                sysprops.put("user",mysUserID);
+                sysprops.put("password",mysPassword);
 
-                try {
-                    Class.forName(mysJDBCDriver).newInstance();
-                    Properties sysprops = System.getProperties();
-                    sysprops.put("user", mysUserID);
-                    sysprops.put("password", mysPassword);
+                //connect to the database
+                conn = DriverManager.getConnection(mysURL,sysprops);
+                System.out.println("Connected successfully to database using JConnect");
 
-                    //connect to the database
-                    conn = DriverManager.getConnection(mysURL, sysprops);
-                    System.out.println("Connected successfully to database using JConnect");
-
-                    conn.setAutoCommit(false);
-
-                    String query = "select * from stopsat a, stopsat b where a.AirlineID = b.AirlineID and a.StopNo < b.StopNo and a.AirportID= ?";
-
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    
-                    ps = conn.prepareStatement(query);
-                    ps.setString(1, "LGA");
-//                    ps.setString(2, "2011-01-05");
-//                    ps.executeQuery();
-
-                    ResultSet res = ps.executeQuery();
-
-                    res.next();
-                    
-                    System.out.println(res.getString("AirlineID"));
-                    
-                    
-//                    System.out.println(res.));
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                conn.setAutoCommit(false);
+                
+                String query = "select * from airport";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet res = ps.executeQuery();
+                
+                json += "{\"data\":[";
+                
+                while (res.next())
+                {
+                    json+=("{\"airlineID\": \"" + res.getString("id") + "\"},");
                 }
-
-                response.sendRedirect("#flight-data");
-
-            }
-
-
-            
-        }                        
+                
+                String jsonSend = json.substring(0, json.length()-1);
+                
+                jsonSend += "]}";
+                
+                System.out.println(jsonSend);
+                
+                out.print(jsonSend);
+        
+        } catch(Exception e){
+                e.printStackTrace();
+        }
+        finally{
+                try{conn.close();}catch(Exception ee){};
+        }
+    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

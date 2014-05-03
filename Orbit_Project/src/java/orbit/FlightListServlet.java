@@ -45,7 +45,7 @@ public class FlightListServlet extends HttpServlet {
         String mysJDBCDriver = "com.mysql.jdbc.Driver";
         String mysURL = "jdbc:mysql://localhost:3306/cse_305_project_transactions?zeroDateTimeBehavior=convertToNull";
         String mysUserID = "root";
-        String mysPassword = "root";
+        String mysPassword = "";
         Connection conn=null;
         try {
                 Class.forName(mysJDBCDriver).newInstance();
@@ -69,7 +69,7 @@ public class FlightListServlet extends HttpServlet {
                         + "SA.ArrTime, SA.AirportID\n" +
                         "FROM StopsAt SD, StopsAt SA\n" +
                         "WHERE (SD.AirlineID = SA.AirlineID AND SD.FlightNo = SA.FlightNo "
-                        + "AND SD.StopNo = SA.StopNo - 1)";
+                        + "AND SD.StopNo < SA.StopNo)";
                 ps = conn.prepareStatement(query);
                 ps.executeUpdate();
                 
@@ -109,6 +109,7 @@ public class FlightListServlet extends HttpServlet {
                 }
                 
                 conn.commit();
+                
         } catch(Exception e){
                 e.printStackTrace();
         }
