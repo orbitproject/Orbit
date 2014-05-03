@@ -1,5 +1,6 @@
 $(document).ready(function() {
     
+    $('#menu').load('menu.html');
  
     
     var i = 1;
