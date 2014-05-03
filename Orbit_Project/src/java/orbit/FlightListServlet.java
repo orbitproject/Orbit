@@ -37,6 +37,10 @@ public class FlightListServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String leaving_from = request.getParameter("leaving-from");
+        String going_to = request.getParameter("going-to");
+        String departing_on = request.getParameter("departing-on");
+        
         List<String> jsonData = new ArrayList();
         String mysJDBCDriver = "com.mysql.jdbc.Driver";
         String mysURL = "jdbc:mysql://localhost:3306/cse_305_project_transactions?zeroDateTimeBehavior=convertToNull";
@@ -71,11 +75,11 @@ public class FlightListServlet extends HttpServlet {
                 
                 query = "SELECT DISTINCT F1.AirlineID, F1.FlightNo\n" +
                         "FROM FlightSchedule F1, FlightSchedule F2\n" +
-                        "WHERE (F1.FromAirport = ? AND F2.ToAirport = ? AND F1.DepTime LIKE ? ";
+                        "WHERE (F1.FromAirport = ? AND F2.ToAirport = ? AND F1.DepTime LIKE ?)";
                 ps = conn.prepareStatement(query);
-                ps.setString(1, "");
-                ps.setString(2, "");
-                ps.setString(3, "" + "%");
+                ps.setString(1, leaving_from);
+                ps.setString(2, going_to);
+                ps.setString(3, departing_on + "%");
                 ResultSet res = ps.executeQuery();
                 String airlineID = "";
                 int flightNo = 0;

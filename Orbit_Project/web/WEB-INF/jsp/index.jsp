@@ -59,7 +59,7 @@
                     <h2 class="content-subhead">Check out last minute flight</h2>
 
 
-                    <form id="flight-home" class="pure-form pure-form-stacked" method="POST" action="flightdata">
+                    <form id="flight-home" class="pure-form pure-form-stacked" method="POST" action="flightlist">
                         <fieldset>
                             <legend>Book Flight</legend>
 
