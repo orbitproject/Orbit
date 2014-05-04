@@ -92,12 +92,12 @@
                                     <div class="pure-g">
                                         <div class="pure-u-1 pure-u-med-1-3">
                                             <label for="leaving-from">Leaving from</label>
-                                            <input id="leaving-from" name='leaving-from' type="text">
+                                            <input id="leaving-from" name='leaving-from' type="text" required>
                                         </div>
 
                                         <div class="pure-u-1 pure-u-med-1-8">
                                             <label for="going-to">Going to</label>
-                                            <input id="going-to" name='going-to' type="text">
+                                            <input id="going-to" name='going-to' type="text" required>
                                         </div>  
                                     </div>      
                                 </div>
@@ -107,7 +107,7 @@
 
                                     <div class="pure-u-1 pure-u-med-1-3">
                                         <label for="departing-on">Departing on</label>
-                                        <input id="departing-on" name='departing-on' type="date">
+                                        <input id="departing-on" name='departing-on' type="date" required>
                                     </div>
 
                                     <div id="returning-input" class="pure-u-1 pure-u-med-1-3">
@@ -135,8 +135,46 @@
                         </fieldset>
                     </form>
 
-                    <table id="flight-data" class="pure-table">
-                    </table>
+                    <div>
+                        <style scoped>
+
+                            .button-success,
+                            .button-error,
+                            .button-warning,
+                            .button-secondary {
+                                color: white;
+                                border-radius: 4px;
+                                text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+                            }
+
+                            .button-success {
+                                background: rgb(28, 184, 65); /* this is a green */
+                            }
+
+                            .button-error {
+                                background: rgb(202, 60, 60); /* this is a maroon */
+                            }
+
+                            .button-warning {
+                                background: rgb(223, 117, 20); /* this is an orange */
+                            }
+
+                            .button-secondary {
+                                background: rgb(66, 184, 221); /* this is a light blue */
+                            }
+
+                        </style>
+
+<!--                        <button class="button-success pure-button">Success Button</button>
+                        <button class="button-error pure-button">Error Button</button>
+                        <button class="button-warning pure-button">Warning Button</button>
+                        <button class="button-secondary pure-button">Secondary Button</button>-->
+
+                        <table id="flight-data" class="pure-table">
+
+                        </table>
+
+                    </div>
 
                     <h2 class="content-subhead">We Love Travel</h2>
                     <p>

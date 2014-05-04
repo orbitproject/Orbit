@@ -16,57 +16,23 @@ import javax.servlet.RequestDispatcher;
 /**
  *
  * @author RahulSarna
+ * 
+ * jsonData.add("{\"airlineID\": \"" + res.getString("AirlineID") + "\", "
+                            + "\"flightNo\": \"" + res.getInt("FlightNo") + "\", "
+                            + "\"legNo\": \"" + res.getInt("LegNo") + "\", "
+                            + "\"depTime\": \"" + res.getString("DepTime") + "\", "
+                            + "\"fromAirport\": \"" + res.getString("FromAirport") + "\", "
+                            + "\"arrTime\": \"" + res.getString("ArrTime") + "\", "
+                            + "\"toAirport\": \"" + res.getString("ToAirport") + "\"}");
+ * 
+ * 
+ * 
  */
 public class FlightListing {
     
+    String AirlineID;
+    String FlightNo;
     
-    public static void oneWayListings (String DepartureAirport, String ArrivalAirport, String DepartTime){
-        
-        RequestDispatcher dispatcher;
-        String mysJDBCDriver = "com.mysql.jdbc.Driver";
-        String mysURL = "jdbc:mysql://localhost:3306/cse_305_project_transactions?zeroDateTimeBehavior=convertToNull";
-        String mysUserID = "root";
-        String mysPassword = "";
-        Connection conn=null;
-        
-        try{
-                Class.forName(mysJDBCDriver).newInstance();
-                Properties sysprops=System.getProperties();
-                sysprops.put("user",mysUserID);
-                sysprops.put("password",mysPassword);
-
-                //connect to the database
-                conn = DriverManager.getConnection(mysURL,sysprops);
-                System.out.println("Connected successfully to database using JConnect");
-
-                conn.setAutoCommit(false);
-                
-                String query = "SELECT * FROM Person";
-                PreparedStatement ps = conn.prepareStatement(query);
-                ResultSet res = ps.executeQuery();
-                
-                
-                query = "select *" +
-                        "from stopsat a, stopsat b" +
-                        "where a.AirlineID = b.AirlineID and a.StopNo < b.StopNo and a.AirportID=? and a.DeptTime like ?";
-                
-                ps = conn.prepareStatement(query);
-                ps.setString(1, DepartureAirport);
-                ps.setString(2, DepartTime);
-                ps.executeUpdate();
-                
-                res = ps.executeQuery();
-                
-                System.out.println(res.next());
-                
-                
-              }         
-        catch(Exception e){
-                e.printStackTrace();
-        }  
-        
-        
-    }
     
     
 }
