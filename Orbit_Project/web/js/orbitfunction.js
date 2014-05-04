@@ -2,7 +2,6 @@ $(document).ready(function() {
 
     $('#menu').load('menu.html');
 
-
     var i = 1;
 
 
@@ -16,7 +15,7 @@ $(document).ready(function() {
                     i = 1;
                     $('#returning-input').html('');
                     $('#multi-source').html("");
-                    $('#returning-input').append('<label for="arriving-on">Returning on</label><input id="returning-on" name="returning-on" type="date">');
+                    $('#returning-input').append('<label for="arriving-on">Returning on</label><input id="returning-on" name="returning-on" type="date" required>');
                 }
                 else if ($(this).is(':checked') && $(this).val() === 'multi-city') {
 
@@ -124,7 +123,7 @@ $(document).ready(function() {
                 var flightInfo;
                 var currentIndex;
                 
-
+//<a class="pure-button" href="#">A Pure Button</a>
                 if ($('#one-way').is(':checked')) {
 
                     for (var i = 0; i < parsedJSON.data.length; i++)
@@ -136,7 +135,7 @@ $(document).ready(function() {
                                     flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
                                     flightInfo.depTime + '</td><td>' + flightInfo.fromAirport + '</td><td>' +
                                     flightInfo.arrTime + '</td><td>' + flightInfo.toAirport
-                                    + '</td><td>' + '<button class="button-secondary pure-button">Book Flight</button>' + '</td></tr>');
+                                    + '</td><td>' + '<a id="book-flight" class="button-secondary pure-button" href="makeReservation.jsp">Book Flight</button>' + '</td></tr>');
                         else if (flightInfo.legNo === 1) {
                             $('#flight-data').append('<tr class="pure-table-odd"><td>' + flightInfo.airlineID + '</td><td>' +
                                     flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
@@ -161,9 +160,9 @@ $(document).ready(function() {
                         // move on to returning flight of roundtrip
                         if (flightInfo.fromAirport === $('#going-to').val())
                         {
-                            $('#roundtrip-flight-data').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
-                                <th>LegNo</th><th>DepTime</th><th>FromAirport</th><th>ArrTime</th>\n\
-                                <th>ToAirport</th><th>Book Flight</th></tr></thead>");
+//                            $('#roundtrip-flight-data').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
+//                                <th>LegNo</th><th>DepTime</th><th>FromAirport</th><th>ArrTime</th>\n\
+//                                <th>ToAirport</th><th>Book Flight</th></tr></thead>");
                             currentIndex = i;
                             break;
                         }
@@ -173,8 +172,8 @@ $(document).ready(function() {
                                     flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
                                     flightInfo.depTime + '</td><td>' + flightInfo.fromAirport + '</td><td>' +
                                     flightInfo.arrTime + '</td><td>' + flightInfo.toAirport
-                                    + '</td><td>' + '<button class="button-secondary pure-button">Book Flight</button>' + '</td></tr>');
-                        else if (flightInfo.legNo === 1) {
+                                    + '</td><td>' + '</td></tr>');
+                        else if (flightInfo.legNo === 1 && flightInfo.fromAirport === $('#leaving-from').val()) {
                             $('#flight-data').append('<tr class="pure-table-odd"><td>' + flightInfo.airlineID + '</td><td>' +
                                     flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
                                     flightInfo.depTime + '</td><td>' + flightInfo.fromAirport + '</td><td>' +
@@ -193,15 +192,15 @@ $(document).ready(function() {
                     {
                         flightInfo = parsedJSON.data[j];
                         
-                         if (flightInfo.legNo === 1) {
-                            $('#roundtrip-flight-data').append('<tr class="pure-table-odd"><td>' + flightInfo.airlineID + '</td><td>' +
+                         if (flightInfo.toAirport === $('#leaving-from').val()) {
+                            $('#flight-data').append('<tr><td>' + flightInfo.airlineID + '</td><td>' +
                                     flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
                                     flightInfo.depTime + '</td><td>' + flightInfo.fromAirport + '</td><td>' +
-                                    flightInfo.arrTime + '</td><td>' + flightInfo.toAirport + '</td></tr>'
-                                    + '</td><td>' + "" + '</td></tr>');
+                                    flightInfo.arrTime + '</td><td>' + flightInfo.toAirport
+                                    + '</td><td>'+'<a id="book-flight" class="button-secondary pure-button" href="makeReservation.jsp">Book Flight</button>' + '</td></tr>');
                         }
                         else
-                            $('#roundtrip-flight-data').append('<tr class="pure-table-odd"><td>' + flightInfo.airlineID + '</td><td>' +
+                            $('#flight-data').append('<tr class="pure-table-odd"><td>' + flightInfo.airlineID + '</td><td>' +
                                     flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
                                     flightInfo.depTime + '</td><td>' + flightInfo.fromAirport + '</td><td>' +
                                     flightInfo.arrTime + '</td><td>' + flightInfo.toAirport + '</td><td>' + " " + '</td></tr>');

@@ -71,11 +71,22 @@
 
                                     <div class="pure-u-1 pure-u-med-1-2">
                                         <label for="select-fare">Fare Options</label>
-                                        <select id="select-fare" name='select-fare' class="pure-input-1-2">
-                                            <option>Lowest Fare</option>
-                                            <option>Morning</option>
-                                            <option>Afternoon</option>
-                                            <option>Evening</option>
+                                        <select id="select-fare-type" name='select-fare-type' class="pure-input-1-2">
+                                            <option>Economy</option>
+                                            <option>First</option>
+                                            <option>Business</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="pure-u-1 pure-u-med-1-2">
+                                        <label for="total-people">Adults(18+)</label>
+                                        <select id="total-people" name='total-people' class="pure-input-1-2">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
                                         </select>
                                     </div>
 
