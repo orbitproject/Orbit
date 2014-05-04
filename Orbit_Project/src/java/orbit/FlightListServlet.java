@@ -37,16 +37,23 @@ public class FlightListServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        
         String leaving_from = request.getParameter("leaving-from");
         String going_to = request.getParameter("going-to");
         String departing_on = request.getParameter("departing-on");
         
-        List<String> jsonData = new ArrayList();
+        //List<String> jsonData = new ArrayList();
+        String json1 = "";
+        String json2 = "";
+        String jsonFinal = "";
         String mysJDBCDriver = "com.mysql.jdbc.Driver";
         String mysURL = "jdbc:mysql://localhost:3306/cse_305_project_transactions?zeroDateTimeBehavior=convertToNull";
         String mysUserID = "root";
-        String mysPassword = "";
+        String mysPassword = "root";
         Connection conn=null;
+        
+        try (PrintWriter out = response.getWriter()) {
         try {
                 Class.forName(mysJDBCDriver).newInstance();
                 Properties sysprops=System.getProperties();
@@ -69,9 +76,11 @@ public class FlightListServlet extends HttpServlet {
                         + "SA.ArrTime, SA.AirportID\n" +
                         "FROM StopsAt SD, StopsAt SA\n" +
                         "WHERE (SD.AirlineID = SA.AirlineID AND SD.FlightNo = SA.FlightNo "
-                        + "AND SD.StopNo < SA.StopNo)";
+                        + "AND SD.StopNo = SA.StopNo - 1)";
                 ps = conn.prepareStatement(query);
                 ps.executeUpdate();
+                
+                conn.commit();
                 
                 query = "SELECT DISTINCT F1.AirlineID, F1.FlightNo\n" +
                         "FROM FlightSchedule F1, FlightSchedule F2\n" +
@@ -97,18 +106,80 @@ public class FlightListServlet extends HttpServlet {
                 ps.setInt(2, flightNo);
                 res = ps.executeQuery();
                 
-                while (res.next())
-                {
-                    jsonData.add("{\"airlineID\": \"" + res.getString("AirlineID") + "\", "
-                            + "\"flightNo\": \"" + res.getInt("FlightNo") + "\", "
-                            + "\"legNo\": \"" + res.getInt("LegNo") + "\", "
-                            + "\"depTime\": \"" + res.getString("DepTime") + "\", "
-                            + "\"fromAirport\": \"" + res.getString("FromAirport") + "\", "
-                            + "\"arrTime\": \"" + res.getString("ArrTime") + "\", "
-                            + "\"toAirport\": \"" + res.getString("ToAirport") + "\"}");
-                }
-                
-                conn.commit();
+                json1 += "{\"data\":[";
+
+                    while (res.next())
+                    {
+                        if (res.getString("fromAirport").equals(leaving_from) 
+                                && res.getString("toAirport").equals(going_to))
+                            json1 = "{\"data\":[";
+                        
+                        json1 += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
+                                + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
+                                + "\"legNo\": \"" + res.getInt("LegNo") + "\","
+                                + "\"depTime\": \"" + res.getString("DepTime") + "\","
+                                + "\"fromAirport\": \"" + res.getString("FromAirport") + "\","
+                                + "\"arrTime\": \"" + res.getString("ArrTime") + "\","
+                                + "\"toAirport\": \"" + res.getString("ToAirport") + "\"},";
+                        
+                        if (res.getString("fromAirport").equals(leaving_from) 
+                                && res.getString("toAirport").equals(going_to))
+                            res.last();
+                    }
+                    
+                    if (request.getParameter("optionsRadios").equals("round-trip"))
+                    {
+                        String returning_on = request.getParameter("returning-on");
+                        
+                        query = "SELECT DISTINCT F1.AirlineID, F1.FlightNo\n" +
+                        "FROM FlightSchedule F1, FlightSchedule F2\n" +
+                        "WHERE (F1.FromAirport = ? AND F2.ToAirport = ? AND F2.ArrTime LIKE ?)";
+                        ps = conn.prepareStatement(query);
+                        ps.setString(1, going_to);
+                        ps.setString(2, leaving_from);
+                        ps.setString(3, returning_on + "%");
+                        res = ps.executeQuery();
+
+                        while (res.next())
+                        {
+                            airlineID = res.getString("AirlineID");
+                            flightNo = res.getInt("FlightNo");
+                        }
+
+                        query = "SELECT * FROM FlightSchedule\n" +
+                                "WHERE (AirlineID = ? AND FlightNo = ?)";
+                        ps = conn.prepareStatement(query);
+                        ps.setString(1, airlineID);
+                        ps.setInt(2, flightNo);
+                        res = ps.executeQuery();
+
+                            while (res.next())
+                            {
+                                if (res.getString("fromAirport").equals(going_to) 
+                                        && res.getString("toAirport").equals(leaving_from))
+                                    json2 = "";
+
+                                json2 += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
+                                        + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
+                                        + "\"legNo\": \"" + res.getInt("LegNo") + "\","
+                                        + "\"depTime\": \"" + res.getString("DepTime") + "\","
+                                        + "\"fromAirport\": \"" + res.getString("FromAirport") + "\","
+                                        + "\"arrTime\": \"" + res.getString("ArrTime") + "\","
+                                        + "\"toAirport\": \"" + res.getString("ToAirport") + "\"},";
+
+                                if (res.getString("fromAirport").equals(going_to) 
+                                        && res.getString("toAirport").equals(leaving_from))
+                                    res.last();
+                            }
+                    }
+
+                    jsonFinal = json1 + json2;
+                    jsonFinal = jsonFinal.substring(0, jsonFinal.length()-1);
+                    jsonFinal += "]}";
+
+                    System.out.println(jsonFinal);
+
+                    out.print(jsonFinal);
                 
         } catch(Exception e){
                 e.printStackTrace();
@@ -117,14 +188,15 @@ public class FlightListServlet extends HttpServlet {
                 try{conn.close();}catch(Exception ee){};
         }
         
-        response.setContentType("application/json");
+        /*response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
             for (int i = 0; i < jsonData.size(); i++)
             {
                 out.print(jsonData.get(i));
             }
             out.flush();
-        }
+        }*/
+    }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

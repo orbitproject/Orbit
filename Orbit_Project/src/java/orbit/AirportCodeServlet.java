@@ -42,7 +42,6 @@ public class AirportCodeServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         
-        List<String> jsonData = new ArrayList();
         
         String json = "";
            

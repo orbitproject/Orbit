@@ -48,7 +48,7 @@
                     <h2 class="content-subhead">Check out last minute flight</h2>
 
 
-                    <form id="flight-home" class="pure-form pure-form-stacked" method="POST" action="flightlist">
+                    <form id="flight-home" class="pure-form pure-form-stacked">
                         <fieldset>
                             <legend>Book Flight</legend>
 
@@ -92,12 +92,12 @@
                                     <div class="pure-g">
                                         <div class="pure-u-1 pure-u-med-1-3">
                                             <label for="leaving-from">Leaving from</label>
-                                            <input id="leaving-from" name='leaving-from' type="text">
+                                            <input id="leaving-from" name='leaving-from' type="text" required>
                                         </div>
 
                                         <div class="pure-u-1 pure-u-med-1-8">
                                             <label for="going-to">Going to</label>
-                                            <input id="going-to" name='going-to' type="text">
+                                            <input id="going-to" name='going-to' type="text" required>
                                         </div>  
                                     </div>      
                                 </div>
@@ -107,7 +107,7 @@
 
                                     <div class="pure-u-1 pure-u-med-1-3">
                                         <label for="departing-on">Departing on</label>
-                                        <input id="departing-on" name='departing-on' type="date">
+                                        <input id="departing-on" name='departing-on' type="date" required>
                                     </div>
 
                                     <div id="returning-input" class="pure-u-1 pure-u-med-1-3">
@@ -131,81 +131,54 @@
 
                             <div>&nbsp</div>
 
-                            <button type="submit" class="pure-button pure-button-primary">Find Flights</button>
+                            <button id="find-flights" type="submit" class="pure-button pure-button-primary">Find Flights</button>
                         </fieldset>
                     </form>
 
-                    <table id="flight-data" class="pure-table">
+                    <div>
+                        <style scoped>
 
+                            .button-success,
+                            .button-error,
+                            .button-warning,
+                            .button-secondary {
+                                color: white;
+                                border-radius: 4px;
+                                text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+                            }
 
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Make</th>
-                                <th>Model</th>
-                                <th>Year</th>
-                            </tr>
-                        </thead>
+                            .button-success {
+                                background: rgb(28, 184, 65); /* this is a green */
+                            }
 
-                        <tbody>
-                            <tr class="pure-table-odd">
-                                <td>1</td>
-                                <td>Honda</td>
-                                <td>Accord</td>
-                                <td>2009</td>
-                            </tr>
+                            .button-error {
+                                background: rgb(202, 60, 60); /* this is a maroon */
+                            }
 
-                            <tr>
-                                <td>2</td>
-                                <td>Toyota</td>
-                                <td>Camry</td>
-                                <td>2012</td>
-                            </tr>
+                            .button-warning {
+                                background: rgb(223, 117, 20); /* this is an orange */
+                            }
 
-                            <tr class="pure-table-odd">
-                                <td>3</td>
-                                <td>Hyundai</td>
-                                <td>Elantra</td>
-                                <td>2010</td>
-                            </tr>
+                            .button-secondary {
+                                background: rgb(66, 184, 221); /* this is a light blue */
+                            }
 
-                            <tr>
-                                <td>4</td>
-                                <td>Ford</td>
-                                <td>Focus</td>
-                                <td>2008</td>
-                            </tr>
+                        </style>
 
-                            <tr class="pure-table-odd">
-                                <td>5</td>
-                                <td>Nissan</td>
-                                <td>Sentra</td>
-                                <td>2011</td>
-                            </tr>
+<!--                        <button class="button-success pure-button">Success Button</button>
+                        <button class="button-error pure-button">Error Button</button>
+                        <button class="button-warning pure-button">Warning Button</button>
+                        <button class="button-secondary pure-button">Secondary Button</button>-->
 
-                            <tr>
-                                <td>6</td>
-                                <td>BMW</td>
-                                <td>M3</td>
-                                <td>2009</td>
-                            </tr>
+                        <table id="flight-data" class="pure-table">
 
-                            <tr class="pure-table-odd">
-                                <td>7</td>
-                                <td>Honda</td>
-                                <td>Civic</td>
-                                <td>2010</td>
-                            </tr>
+                        </table>
+                        <br />
+                        <table id="roundtrip-flight-data" class="pure-table">
+                            
+                        </table>
 
-                            <tr>
-                                <td>8</td>
-                                <td>Kia</td>
-                                <td>Soul</td>
-                                <td>2010</td>
-                            </tr>
-                        </tbody>
-
-                    </table>
+                    </div>
 
                     <h2 class="content-subhead">We Love Travel</h2>
                     <p>

@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en">
 <head>
@@ -35,23 +36,7 @@
                 <span></span>
             </a>
 
-     <div id="menu">
-        <div class="pure-menu pure-menu-open">
-            <a class="pure-menu-heading" href="#">Orbit Travel</a>
-
-            
-            <!--class="menu-item-divided pure-menu-selected"-->
-            
-            <ul id="menu-options">
-                <li><a href="redirect.jsp">Home</a></li>
-                <li><a href="flightList.jsp">Book Flight</a></li>
-
-                <li class="menu-item-divided pure-menu-selected"><a href="loginPage.jsp">Login</a></li>
-
-                <li><a href="signup.jsp">Sign Up</a></li>
-            </ul>
-        </div>
-    </div>
+     <div id="menu"></div>
 
     <div id="main">
         <div class="header">
@@ -64,41 +49,124 @@
             <h2 class="content-subhead">Sign in or Select an option</h2>
             
             
-                        <form class="pure-form pure-form-stacked">
-                            <fieldset>
-                                <legend>Sign in with your email</legend>
-                                                                                                                     
-                                
-                                <div class="pure-g-r">
-                                    <div class="pure-u-1-3">                                                                                                                                                                                   
+            <div>
+    <style scoped>
 
-                                        
-                                        <div class="pure-g">
-                                            <div class="pure-u-1 pure-u-med-1-3">
-                                                <label for="username">Email Address</label>
-                                                <input id="username" type="text">
-                                            </div>
+        .button-success,
+        .button-error,
+        .button-warning,
+        .button-secondary {
+            color: white;
+            border-radius: 4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
 
-                                            <div class="pure-u-1 pure-u-med-1-8">
-                                                <label for="password">Password</label>
-                                                <input id="password" type="password">
-                                            </div> 
-                                            
-                                        </div>      
-                                    </div>                                       
-                                </div>
-                                
-                                <button type="submit" class="pure-button pure-button-primary">Login</button>
+        .button-success {
+            background: rgb(28, 184, 65); /* this is a green */
+        }
 
-                                <div>&nbsp</div>
-                                
-                                <button class="pure-button pure-button-secondary">Sign Up!</button>
+        .button-error {
+            background: rgb(202, 60, 60); /* this is a maroon */
+        }
+
+        .button-warning {
+            background: rgb(223, 117, 20); /* this is an orange */
+        }
+
+        .button-secondary {
+            background: rgb(66, 184, 221); /* this is a light blue */
+        }
+
+    </style>
+
+    <button class="button-success pure-button">Success Button</button>
+    <button class="button-error pure-button">Error Button</button>
+    <button class="button-warning pure-button">Warning Button</button>
+    
+             <table id="flight-data" class="pure-table">
 
 
-                            </fieldset>
-                        </form>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Make</th>
+                                <th>Model</th>
+                                <th>Year</th>
+                                <th></th>
+                            </tr>
+                        </thead>
 
+                        <tbody>
+                            
+                            <c:forEach var="element" items="${listData}">
+                                <tr>
+                                    <td>${element.airlineID}</td> 
+<!--                                    <td>${element.def}</td> 
+                                    <td>${element.ghi}</td>-->
+                                </tr> 
+                            </c:forEach>
+                            
+                            <tr class="pure-table-odd">
+                                <td>1</td>
+                                <td>Honda</td>
+                                <td>Accord</td>
+                                <td>2009</td>
+                                <td><button class="button-secondary pure-button">Secondary Button</button></td>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td>Toyota</td>
+                                <td>Camry</td>
+                                <td>2012</td>
+                            </tr>
+
+                            <tr class="pure-table-odd">
+                                <td>3</td>
+                                <td>Hyundai</td>
+                                <td>Elantra</td>
+                                <td>2010</td>
+                            </tr>
+
+                            <tr>
+                                <td>4</td>
+                                <td>Ford</td>
+                                <td>Focus</td>
+                                <td>2008</td>
+                            </tr>
+
+                            <tr class="pure-table-odd">
+                                <td>5</td>
+                                <td>Nissan</td>
+                                <td>Sentra</td>
+                                <td>2011</td>
+                            </tr>
+
+                            <tr>
+                                <td>6</td>
+                                <td>BMW</td>
+                                <td>M3</td>
+                                <td>2009</td>
+                            </tr>
+
+                            <tr class="pure-table-odd">
+                                <td>7</td>
+                                <td>Honda</td>
+                                <td>Civic</td>
+                                <td>2010</td>
+                            </tr>
+
+                            <tr>
+                                <td>8</td>
+                                <td>Kia</td>
+                                <td>Soul</td>
+                                <td>2010</td>
+                            </tr>
+                        </tbody>
+
+                    </table>           
             
+</div>
 
             
             <h2 class="content-subhead">We Love Travel</h2>
