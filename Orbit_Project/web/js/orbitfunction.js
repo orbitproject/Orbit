@@ -106,7 +106,32 @@ $(document).ready(function() {
 	        alert('Error displaying flights' + jsonData);
 	    }
   });
-     
+  
+  /*$('#flight-home').submit(
+          retrieveFlightList()
+    );*/
+    
+    $(function(){
+        $('#flight-home').submit(function(){
+            $.post('flightlist', $(this).serialize(), function(jsonData) {
+                $('#flight-data').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
+                                <th>LegNo</th><th>DepTime</th><th>FromAirport</th><th>ArrTime</th>\n\
+                                <th>ToAirport</th></tr></thead>");
+	    	var parsedJSON = jQuery.parseJSON(jsonData);
+                var flightInfo;
+                
+	    	for(var i=0; i<parsedJSON.data.length; i++)
+                {
+                    flightInfo = parsedJSON.data[i];
+                    $('#flight-data').append('<tr><td>' + flightInfo.airlineID + '</td><td>' +
+                            flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
+                            flightInfo.depTime + '</td><td>' + flightInfo.fromAirport + '</td><td>' +
+                            flightInfo.arrTime + '</td><td>' + flightInfo.toAirport + '</td></tr>');
+                };
+            }/*, 'json'*/);
+            return false;
+        });
+    });    
 });
 
 function makeRequest(request, response) {
@@ -135,6 +160,35 @@ function makeRequest(request, response) {
         }
     });
 }
+
+/*function retrieveFlightList()
+{
+    $.ajax({
+	    type: 'post',
+	    url: 'flightlist',
+	    dataType: 'text',
+	    success: function(jsonData) {
+	    	$('#flight-data').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
+                                <th>LegNo</th><th>DepTime</th><th>FromAirport</th><th>ArrTime</th>\n\
+                                <th>ToAirport</th></tr></thead>");
+	    	var parsedJSON = jQuery.parseJSON(jsonData);
+	    	var flightInfo;
+                
+	    	for(var i=0; i<parsedJSON.data.length; i++)
+                {
+                    flightInfo = parsedJSON.data[i];
+                    $('#flight-data').append('<tr><td>' + flightInfo.airlineID + '</td><td>' +
+                            flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
+                            flightInfo.depTime + '</td><td>' + flightInfo.fromAirport + '</td><td>' +
+                            flightInfo.arrTime + '</td><td>' + flightInfo.toAirport + '</td></tr>');
+                }       
+	    },
+            
+	    error: function(jsonData) {
+	        alert('Error displaying flights' + jsonData);
+	    }
+  });
+}*/
 
 function buildQuery(term) {
     return "select * from json where url = 'http://airportcode.riobard.com/search?fmt=JSON&q=" + encodeURI(term) + "'";
