@@ -113,6 +113,7 @@ $(document).ready(function() {
     
     $(function(){
         $('#flight-home').submit(function(){
+            $('#flight-data').html("");
             $.post('flightlist', $(this).serialize(), function(jsonData) {
                 $('#flight-data').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
                                 <th>LegNo</th><th>DepTime</th><th>FromAirport</th><th>ArrTime</th>\n\

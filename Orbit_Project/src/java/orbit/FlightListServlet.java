@@ -115,6 +115,9 @@ public class FlightListServlet extends HttpServlet {
                                 + "\"fromAirport\": \"" + res.getString("FromAirport") + "\","
                                 + "\"arrTime\": \"" + res.getString("ArrTime") + "\","
                                 + "\"toAirport\": \"" + res.getString("ToAirport") + "\"},";
+                        if (res.getString("fromAirport").equals(leaving_from) 
+                                && res.getString("toAirport").equals(going_to))
+                            res.last();
                     }
 
                     json = json.substring(0, json.length()-1);
