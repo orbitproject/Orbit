@@ -114,14 +114,16 @@ $(document).ready(function() {
     $(function() {
         $('#flight-home').submit(function() {
             $('#flight-data').html("");
+            $('#roundtrip-flight-data').html("");
             $.post('flightlist', $(this).serialize(), function(jsonData) {
                 $('#flight-data').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
                                 <th>LegNo</th><th>DepTime</th><th>FromAirport</th><th>ArrTime</th>\n\
                                 <th>ToAirport</th><th>Book Flight</th></tr></thead>");
 
-
                 var parsedJSON = jQuery.parseJSON(jsonData);
                 var flightInfo;
+                var currentIndex;
+                
 
                 if ($('#one-way').is(':checked')) {
 
@@ -149,9 +151,68 @@ $(document).ready(function() {
                                     flightInfo.arrTime + '</td><td>' + flightInfo.toAirport + '</td><td>' + " " + '</td></tr>');
 
                     }
-                    ;
                 }//one-way ends
+                else if ($('#round-trip').is(':checked'))
+                {
+                    for (var i = 0; i < parsedJSON.data.length; i++)
+                    {
+                        flightInfo = parsedJSON.data[i];
+                        
+                        // move on to returning flight of roundtrip
+                        if (flightInfo.fromAirport === $('#going-to').val())
+                        {
+                            $('#roundtrip-flight-data').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
+                                <th>LegNo</th><th>DepTime</th><th>FromAirport</th><th>ArrTime</th>\n\
+                                <th>ToAirport</th><th>Book Flight</th></tr></thead>");
+                            currentIndex = i;
+                            break;
+                        }
 
+                        if (flightInfo.toAirport === $('#going-to').val())
+                            $('#flight-data').append('<tr><td>' + flightInfo.airlineID + '</td><td>' +
+                                    flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
+                                    flightInfo.depTime + '</td><td>' + flightInfo.fromAirport + '</td><td>' +
+                                    flightInfo.arrTime + '</td><td>' + flightInfo.toAirport
+                                    + '</td><td>' + '<button class="button-secondary pure-button">Book Flight</button>' + '</td></tr>');
+                        else if (flightInfo.legNo === 1) {
+                            $('#flight-data').append('<tr class="pure-table-odd"><td>' + flightInfo.airlineID + '</td><td>' +
+                                    flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
+                                    flightInfo.depTime + '</td><td>' + flightInfo.fromAirport + '</td><td>' +
+                                    flightInfo.arrTime + '</td><td>' + flightInfo.toAirport + '</td></tr>'
+                                    + '</td><td>' + "" + '</td></tr>');
+                        }
+                        else
+                            $('#flight-data').append('<tr  class="pure-table-odd"><td>' + flightInfo.airlineID + '</td><td>' +
+                                    flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
+                                    flightInfo.depTime + '</td><td>' + flightInfo.fromAirport + '</td><td>' +
+                                    flightInfo.arrTime + '</td><td>' + flightInfo.toAirport + '</td><td>' + " " + '</td></tr>');
+
+                    }
+                    
+                    for (var j = currentIndex; j < parsedJSON.data.length; j++)
+                    {
+                        flightInfo = parsedJSON.data[j];
+                        
+                         if (flightInfo.legNo === 1) {
+                            $('#roundtrip-flight-data').append('<tr class="pure-table-odd"><td>' + flightInfo.airlineID + '</td><td>' +
+                                    flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
+                                    flightInfo.depTime + '</td><td>' + flightInfo.fromAirport + '</td><td>' +
+                                    flightInfo.arrTime + '</td><td>' + flightInfo.toAirport + '</td></tr>'
+                                    + '</td><td>' + "" + '</td></tr>');
+                        }
+                        else
+                            $('#roundtrip-flight-data').append('<tr class="pure-table-odd"><td>' + flightInfo.airlineID + '</td><td>' +
+                                    flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
+                                    flightInfo.depTime + '</td><td>' + flightInfo.fromAirport + '</td><td>' +
+                                    flightInfo.arrTime + '</td><td>' + flightInfo.toAirport + '</td><td>' + " " + '</td></tr>');
+                        
+                        /*$('#roundtrip-flight-data').append('<tr><td>' + flightInfo.airlineID + '</td><td>' +
+                                flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
+                                flightInfo.depTime + '</td><td>' + flightInfo.fromAirport + '</td><td>' +
+                                flightInfo.arrTime + '</td><td>' + flightInfo.toAirport + '</td></tr>'
+                                + '</td><td>' + "" + '</td></tr>');*/
+                    }
+                }
 
             }/*, 'json'*/);
             return false;

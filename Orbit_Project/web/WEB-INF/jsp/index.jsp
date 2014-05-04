@@ -173,6 +173,10 @@
                         <table id="flight-data" class="pure-table">
 
                         </table>
+                        <br />
+                        <table id="roundtrip-flight-data" class="pure-table">
+                            
+                        </table>
 
                     </div>
 
