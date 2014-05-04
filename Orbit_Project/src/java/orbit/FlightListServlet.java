@@ -108,6 +108,10 @@ public class FlightListServlet extends HttpServlet {
 
                     while (res.next())
                     {
+                        if (res.getString("fromAirport").equals(leaving_from) 
+                                && res.getString("toAirport").equals(going_to))
+                            json = "{\"data\":[";
+                        
                         json += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
                                 + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
                                 + "\"legNo\": \"" + res.getInt("LegNo") + "\","
@@ -115,6 +119,7 @@ public class FlightListServlet extends HttpServlet {
                                 + "\"fromAirport\": \"" + res.getString("FromAirport") + "\","
                                 + "\"arrTime\": \"" + res.getString("ArrTime") + "\","
                                 + "\"toAirport\": \"" + res.getString("ToAirport") + "\"},";
+                        
                         if (res.getString("fromAirport").equals(leaving_from) 
                                 && res.getString("toAirport").equals(going_to))
                             res.last();
