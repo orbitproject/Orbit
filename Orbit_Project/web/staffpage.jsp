@@ -61,25 +61,28 @@
                                             <input id="manager" type="radio" name="optionsRadios" value="manager" checked> Manager                                        
                                         </label>
                                     
-                                    <label for="option-two" class="pure-radio">                                                
-                                            <input id="cust-rep" type="radio" name="optionsRadios" value="cust-rep"> Customer Representative                                       
-                                        </label>  
                                     
-                                    <div class="pure-g">                                        
-                                            
-                                        <div class="pure-u-1 pure-u-med-1-3">                                                                                        
+                                    
+                                    <div class="pure-u-1 pure-u-med-1-3">                                                                                        
                                             <label for="username">Email Address</label>
                                             <input id="username" name="username" type="text" required>
                                         </div>
+                                    
+                                </div>
+                                
+                                
+                                <div class="pure-u-1-3">                                                                                                                                                                                                                       
+                                            
+                                        <label for="option-two" class="pure-radio">                                                
+                                            <input id="cust-rep" type="radio" name="optionsRadios" value="cust-rep"> Customer Representative                                       
+                                        </label>  
 
                                         <div class="pure-u-1 pure-u-med-1-8">
                                             <label for="password">Password</label>
                                             <input id="password" name="password" type="password" required>
                                         </div> 
-
-                                    </div>      
+                                    </div>
                                 </div>                                       
-                            </div>
 
                             
                             <div>&nbsp</div>
@@ -88,7 +91,6 @@
 
                             &nbsp;
 
-                            <button class="pure-button pure-button-secondary">Sign Up!</button>
                             <div id="loginError" style="color:red">${requestScope.errorMessage}</div>
 
                         </fieldset>

@@ -134,11 +134,9 @@ public class SignupServlet extends HttpServlet {
         String mysJDBCDriver = "com.mysql.jdbc.Driver";
         String mysURL = "jdbc:mysql://localhost:3306/cse_305_project_transactions?zeroDateTimeBehavior=convertToNull";
         String mysUserID = "root";
-<<<<<<< HEAD
-        String mysPassword = "asdf";
-=======
+
         String mysPassword = "";
->>>>>>> 345c1113da8a0377eac1a2c8829026a11bbf96ed
+
         Connection conn=null;
         try {
                 Class.forName(mysJDBCDriver).newInstance();
