@@ -181,6 +181,9 @@ public class FlightListServlet extends HttpServlet {
                             json2 += json;
                             json = "";
                         }
+                        
+                        if (json2.equals(""))
+                            json1 = "{\"data\":[";
                     }
 
                     jsonFinal = json1 + json2;
