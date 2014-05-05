@@ -32,7 +32,10 @@
         <servlet-name>AirportCodeServlet</servlet-name>
         <servlet-class>orbit.AirportCodeServlet</servlet-class>
     </servlet>
-    
+    <servlet>
+        <servlet-name>ManagerServlet</servlet-name>
+        <servlet-class>orbit.ManagerServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.htm</url-pattern>
@@ -56,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>AirportCodeServlet</servlet-name>
         <url-pattern>/airportcode</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManagerServlet</servlet-name>
+        <url-pattern>/manager</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -42,12 +42,12 @@
 
                     <div class="pure-menu pure-menu-open pure-menu-horizontal" id="managerHeaderMenu">
                         <ul>
-                            <li><a href="#" id="btn0">Employees</a></li>
-                            <li><a href="#" id="btn1">Flights</a></li>
-                            <li><a href="#" id="btn2">Customers</a></li>
-                            <li><a href="#" id="btn3">Reservations</a></li>
-                            <li><a href="#" id="btn4">Revenue</a></li>
-                            <li><a href="#" id="btn5">Sales Report</a></li>
+                            <li><a href="#" id="btn0" name="btn0">Employees</a></li>
+                            <li><a href="#" id="btn1" name="btn1">Flights</a></li>
+                            <li><a href="#" id="btn2" name="btn2">Customers</a></li>
+                            <li><a href="#" id="btn3" name="btn3">Reservations</a></li>
+                            <li><a href="#" id="btn4" name="btn4">Revenue</a></li>
+                            <li><a href="#" id="btn5" name="btn5">Sales Report</a></li>
                         </ul>
                     </div>
                     <p>
@@ -206,16 +206,16 @@
                                         <div class="pure-u-1" id="res-div0">
                                             <br>Enter flight ID and number: <br>
                                             <fieldset class="pure-group">
-                                                <input type="text" class="" placeholder="Flight ID">
-                                                <input type="text" class="" placeholder="Flight number">
+                                                <input type="text" name="resAirlineID" class="" placeholder="Flight ID">
+                                                <input type="text" name="resFlightNo" class="" placeholder="Flight number">
                                             </fieldset>
                                         </div>
                                         
                                         <div class="pure-u-1" id="res-div1">
                                             <br>Enter customer name: <br>
                                             <fieldset class="pure-group">
-                                                <input type="text" class="" placeholder="First name">
-                                                <input type="text" class="" placeholder="Last name">
+                                                <input type="text" name="resFirstName" class="" placeholder="First name">
+                                                <input type="text" name="resLastName" class="" placeholder="Last name">
                                             </fieldset>
                                         </div>
                                         

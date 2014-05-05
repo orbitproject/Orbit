@@ -92,40 +92,45 @@ public class FlightListServlet extends HttpServlet {
                 ResultSet res = ps.executeQuery();
                 String airlineID = "";
                 int flightNo = 0;
+                String json = "";
+                ResultSet res2;
+                
+                json1 += "{\"data\":[";
                 
                 while (res.next())
                 {
                     airlineID = res.getString("AirlineID");
                     flightNo = res.getInt("FlightNo");
-                }
-                
-                query = "SELECT * FROM FlightSchedule\n" +
+                    
+                    query = "SELECT * FROM FlightSchedule\n" +
                         "WHERE (AirlineID = ? AND FlightNo = ?)";
-                ps = conn.prepareStatement(query);
-                ps.setString(1, airlineID);
-                ps.setInt(2, flightNo);
-                res = ps.executeQuery();
-                
-                json1 += "{\"data\":[";
+                    ps = conn.prepareStatement(query);
+                    ps.setString(1, airlineID);
+                    ps.setInt(2, flightNo);
+                    res2 = ps.executeQuery();
 
-                    while (res.next())
+                    while (res2.next())
                     {
-                        if (res.getString("fromAirport").equals(leaving_from) 
-                                && res.getString("toAirport").equals(going_to))
-                            json1 = "{\"data\":[";
+                        if (res2.getString("fromAirport").equals(leaving_from) 
+                                && res2.getString("toAirport").equals(going_to))
+                            json = "";
                         
-                        json1 += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
-                                + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
-                                + "\"legNo\": \"" + res.getInt("LegNo") + "\","
-                                + "\"depTime\": \"" + res.getString("DepTime") + "\","
-                                + "\"fromAirport\": \"" + res.getString("FromAirport") + "\","
-                                + "\"arrTime\": \"" + res.getString("ArrTime") + "\","
-                                + "\"toAirport\": \"" + res.getString("ToAirport") + "\"},";
+                        json += "{\"airlineID\": \"" + res2.getString("AirlineID") + "\","
+                                + "\"flightNo\": \"" + res2.getInt("FlightNo") + "\","
+                                + "\"legNo\": \"" + res2.getInt("LegNo") + "\","
+                                + "\"depTime\": \"" + res2.getString("DepTime") + "\","
+                                + "\"fromAirport\": \"" + res2.getString("FromAirport") + "\","
+                                + "\"arrTime\": \"" + res2.getString("ArrTime") + "\","
+                                + "\"toAirport\": \"" + res2.getString("ToAirport") + "\"},";
                         
-                        if (res.getString("fromAirport").equals(leaving_from) 
-                                && res.getString("toAirport").equals(going_to))
-                            res.last();
+                        if (res2.getString("fromAirport").equals(leaving_from) 
+                                && res2.getString("toAirport").equals(going_to))
+                            res2.last();
                     }
+                    
+                    json1 += json;
+                    json = "";
+                }
                     
                     if (request.getParameter("optionsRadios").equals("round-trip"))
                     {
@@ -144,33 +149,36 @@ public class FlightListServlet extends HttpServlet {
                         {
                             airlineID = res.getString("AirlineID");
                             flightNo = res.getInt("FlightNo");
-                        }
-
-                        query = "SELECT * FROM FlightSchedule\n" +
+                            
+                            query = "SELECT * FROM FlightSchedule\n" +
                                 "WHERE (AirlineID = ? AND FlightNo = ?)";
-                        ps = conn.prepareStatement(query);
-                        ps.setString(1, airlineID);
-                        ps.setInt(2, flightNo);
-                        res = ps.executeQuery();
+                            ps = conn.prepareStatement(query);
+                            ps.setString(1, airlineID);
+                            ps.setInt(2, flightNo);
+                            res2 = ps.executeQuery();
 
-                            while (res.next())
+                            while (res2.next())
                             {
-                                if (res.getString("fromAirport").equals(going_to) 
-                                        && res.getString("toAirport").equals(leaving_from))
-                                    json2 = "";
+                                if (res2.getString("fromAirport").equals(going_to) 
+                                        && res2.getString("toAirport").equals(leaving_from))
+                                    json = "";
 
-                                json2 += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
-                                        + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
-                                        + "\"legNo\": \"" + res.getInt("LegNo") + "\","
-                                        + "\"depTime\": \"" + res.getString("DepTime") + "\","
-                                        + "\"fromAirport\": \"" + res.getString("FromAirport") + "\","
-                                        + "\"arrTime\": \"" + res.getString("ArrTime") + "\","
-                                        + "\"toAirport\": \"" + res.getString("ToAirport") + "\"},";
+                                json += "{\"airlineID\": \"" + res2.getString("AirlineID") + "\","
+                                        + "\"flightNo\": \"" + res2.getInt("FlightNo") + "\","
+                                        + "\"legNo\": \"" + res2.getInt("LegNo") + "\","
+                                        + "\"depTime\": \"" + res2.getString("DepTime") + "\","
+                                        + "\"fromAirport\": \"" + res2.getString("FromAirport") + "\","
+                                        + "\"arrTime\": \"" + res2.getString("ArrTime") + "\","
+                                        + "\"toAirport\": \"" + res2.getString("ToAirport") + "\"},";
 
-                                if (res.getString("fromAirport").equals(going_to) 
-                                        && res.getString("toAirport").equals(leaving_from))
-                                    res.last();
+                                if (res2.getString("fromAirport").equals(going_to) 
+                                        && res2.getString("toAirport").equals(leaving_from))
+                                    res2.last();
                             }
+                            
+                            json2 += json;
+                            json = "";
+                        }
                     }
 
                     jsonFinal = json1 + json2;
