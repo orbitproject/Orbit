@@ -84,7 +84,8 @@ public class FlightListServlet extends HttpServlet {
                 
                 query = "SELECT DISTINCT F1.AirlineID, F1.FlightNo\n" +
                         "FROM FlightSchedule F1, FlightSchedule F2\n" +
-                        "WHERE (F1.FromAirport = ? AND F2.ToAirport = ? AND F1.DepTime LIKE ?)";
+                        "WHERE (F1.AirlineID = F2.AirlineID AND F1.FlightNo = F2.FlightNo "
+                        + "AND F1.FromAirport = ? AND F2.ToAirport = ? AND F1.DepTime LIKE ?)";
                 ps = conn.prepareStatement(query);
                 ps.setString(1, leaving_from);
                 ps.setString(2, going_to);
@@ -137,8 +138,9 @@ public class FlightListServlet extends HttpServlet {
                         String returning_on = request.getParameter("returning-on");
                         
                         query = "SELECT DISTINCT F1.AirlineID, F1.FlightNo\n" +
-                        "FROM FlightSchedule F1, FlightSchedule F2\n" +
-                        "WHERE (F1.FromAirport = ? AND F2.ToAirport = ? AND F2.ArrTime LIKE ?)";
+                                "FROM FlightSchedule F1, FlightSchedule F2\n" +
+                                "WHERE (F1.AirlineID = F2.AirlineID AND F1.FlightNo = F2.FlightNo\n" +
+                                "AND F1.FromAirport = ? AND F2.ToAirport = ? AND F2.ArrTime LIKE ?)";
                         ps = conn.prepareStatement(query);
                         ps.setString(1, going_to);
                         ps.setString(2, leaving_from);
