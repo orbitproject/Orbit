@@ -41,14 +41,37 @@
 
 
                     <div class="pure-menu pure-menu-open pure-menu-horizontal" id="managerHeaderMenu">
-                        <ul>
+                        <label for="employees" class="pure-radio">                                                
+                            <input id="employees" type="radio" name="optionsRadios" value="employees" checked> Employees                                        
+                        </label>
+
+                        <label for="flights" class="pure-radio">                                                
+                            <input id="flights" type="radio" name="optionsRadios" value="flights"> Flights                                       
+                        </label>     
+
+                        <label for="customers" class="pure-radio">                                               
+                            <input id="customers" type="radio" name="optionsRadios" value="customers"> Customers                                        
+                        </label>
+                        
+                        <label for="reservations" class="pure-radio">                                               
+                            <input id="reservations" type="radio" name="optionsRadios" value="reservations"> Reservations                                        
+                        </label>
+                        
+                        <label for="revenue" class="pure-radio">                                               
+                            <input id="revenue" type="radio" name="optionsRadios" value="revenue"> Revenue                                        
+                        </label>
+                        
+                        <label for="salesreport" class="pure-radio">                                               
+                            <input id="salesreport" type="radio" name="optionsRadios" value="salesreport"> Sales Report                                        
+                        </label>
+                        <!--<ul>
                             <li><a href="#" id="btn0" name="btn0">Employees</a></li>
                             <li><a href="#" id="btn1" name="btn1">Flights</a></li>
                             <li><a href="#" id="btn2" name="btn2">Customers</a></li>
                             <li><a href="#" id="btn3" name="btn3">Reservations</a></li>
                             <li><a href="#" id="btn4" name="btn4">Revenue</a></li>
                             <li><a href="#" id="btn5" name="btn5">Sales Report</a></li>
-                        </ul>
+                        </ul>-->
                     </div>
                     <p>
                     
@@ -72,6 +95,22 @@
                     <form class="pure-form pure-form-stacked" method="POST" action='signup'> <!-- TODO: add servlet to post to -->
                         <fieldset id="s0">
                             <legend><strong>Employees</strong></legend>
+                            
+                            <div id="empRadioList">
+                                        <label for="add" class="pure-radio">
+                                            <input id="add" type="radio" name="empActions" value="add">
+                                            Add
+                                        </label>
+                                        <label for="update" class="pure-radio">
+                                            <input id="update" type="radio" name="empActions" value="update">
+                                            Update
+                                        </label>
+                                        <label for="delete" class="pure-radio">
+                                            <input id="delete" type="radio" name="empActions" value="delete">
+                                            Delete
+                                        </label>
+                                </div>
+                            
                             <div class="pure-g-r">
 
                                 <div class="pure-u-1-4">
@@ -113,6 +152,30 @@
                         
                         <fieldset id="s1">
                             <legend><strong>Flights</strong></legend>
+                            
+                            <div id="flightRadioList">
+                                        <label for="allFlights" class="pure-radio">
+                                            <input id="allFlights" type="radio" name="flightActions" value="allFlights">
+                                            View all flights
+                                        </label>
+                                        <label for="flightsForAirport" class="pure-radio">
+                                            <input id="flightsForAirport" type="radio" name="flightActions" value="flightsForAirport">
+                                            View all flights for airports
+                                        </label>
+                                        <label for="mostActive" class="pure-radio">
+                                            <input id="mostActive" type="radio" name="flightActions" value="mostActive">
+                                            View most active flights
+                                        </label>
+                                        <label for="onTime" class="pure-radio">
+                                            <input id="onTime" type="radio" name="flightActions" value="onTime">
+                                            View on-time flights
+                                        </label>
+                                        <label for="delayed" class="pure-radio">
+                                            <input id="delayed" type="radio" name="flightActions" value="delayed">
+                                            View delayed flights
+                                        </label>
+                                </div>
+                            
                             <div class="pure-g-r">
 
                                 <div class="pure-u-1-4">
@@ -267,6 +330,30 @@
                         
                         <fieldset id="s4">
                             <legend><strong>Revenue</strong></legend>
+                            
+                            <div id="revRadioList">
+                                        <label for="revByFlight" class="pure-radio">
+                                            <input id="revByFlight" type="radio" name="revActions" value="revByFlight">
+                                            View revenue generated by a particular flight
+                                        </label>
+                                        <label for="revByDest" class="pure-radio">
+                                            <input id="revByDest" type="radio" name="revActions" value="revByDest">
+                                            View revenue generated by a particular destination city
+                                        </label>
+                                        <label for="revByCust" class="pure-radio">
+                                            <input id="revByCust" type="radio" name="revActions" value="revByCust">
+                                            View revenue generated by a particular customer
+                                        </label>
+                                        <label for="custRepRev" class="pure-radio">
+                                            <input id="custRepRev" type="radio" name="revActions" value="custRepRev">
+                                            View customer rep who generated most revenue
+                                        </label>
+                                        <label for="custRev" class="pure-radio">
+                                            <input id="custRev" type="radio" name="revActions" value="custRev">
+                                            View customer who generated most revenue
+                                        </label>
+                                </div>
+                            
                             <div class="pure-g-r">
 
                                 <div class="pure-u-1-4">
@@ -328,6 +415,21 @@
                                 displayNum(a); 
                             }); 
                         }*/
+                         $("#managerHeaderMenu").click(function(){
+                            if ( $("#employees").is(":checked") )
+                                displayNum(0);
+                            else if ( $("#flights").is(":checked") )
+                                displayNum(1);
+                            else if ( $("#customers").is(":checked") )
+                                displayNum(2);
+                            else if ( $("#reservations").is(":checked") )
+                                displayNum(3);
+                            else if ( $("#revenue").is(":checked") )
+                                displayNum(4);
+                            else if ( $("#salesreport").is(":checked") )
+                                displayNum(5);
+                          });
+                        
                         $("#btn0").click(function(event){
                             displayNum(0); 
                         }); 

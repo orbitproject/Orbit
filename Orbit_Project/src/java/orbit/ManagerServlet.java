@@ -60,10 +60,10 @@ public class ManagerServlet extends HttpServlet {
                 conn.setAutoCommit(false);
                 
                 // employee
-                if (request.getParameter("placeholder").equals("placeholder"))
+                if (request.getParameter("optionsRadios").equals("employees"))
                 {
                     // add
-                    if (request.getParameter("placeholder").equals("placeholder"))
+                    if (request.getParameter("empActions").equals("add"))
                     {
                         String firstName = request.getParameter("placeholder");
                         String lastName = request.getParameter("placeholder");
@@ -119,7 +119,7 @@ public class ManagerServlet extends HttpServlet {
                         conn.commit();
                     }
                     // update
-                    else if (request.getParameter("placeholder").equals("placeholder"))
+                    else if (request.getParameter("empActions").equals("update"))
                     {
                         String ssn = request.getParameter("placeholder");
                         String isManagerString = request.getParameter("placeholder");
@@ -176,7 +176,7 @@ public class ManagerServlet extends HttpServlet {
                         }
                     }
                     // delete
-                    else if (request.getParameter("placeholder").equals("placeholder"))
+                    else if (request.getParameter("empActions").equals("delete"))
                     {
                         String ssn = request.getParameter("placeholder");
 
@@ -188,7 +188,7 @@ public class ManagerServlet extends HttpServlet {
                     }
                 }
                 // obtain sales report for particular month
-                else if (request.getParameter("placeholder").equals("placeholder"))
+                else if (request.getParameter("optionsRadios").equals("salesreport"))
                 {
                     String afterDate = request.getParameter("sales-month-afterdate");
                     String beforeDate = request.getParameter("sales-month-beforedate");
@@ -220,34 +220,157 @@ public class ManagerServlet extends HttpServlet {
 
                     out.print(json);
                 }
-                // comprehensive listing of all flights
-                else if (request.getParameter("placeholder").equals("placeholder"))
+                // flights
+                else if (request.getParameter("optionsRadios").equals("flights"))
                 {
-                    String query = "SELECT * FROM Flight";
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ResultSet res = ps.executeQuery();
-                    
-                    json += "{\"data\":[";
-
-                    while (res.next())
+                    // comprehensive listing of all flights
+                    if (request.getParameter("flightActions").equals("allFlights"))
                     {
-                        json += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
-                                + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
-                                + "\"noOfSeats\": \"" + res.getInt("NoOfSeats") + "\","
-                                + "\"daysOperating\": \"" + res.getString("DaysOperating") + "\","
-                                + "\"minLengthOfStay\": \"" + res.getInt("MinLengthOfStay") + "\","
-                                + "\"maxLengthOfStay\": \"" + res.getInt("MaxLengthOfStay") + "\"},";
+                        String query = "SELECT * FROM Flight";
+                        PreparedStatement ps = conn.prepareStatement(query);
+                        ResultSet res = ps.executeQuery();
+
+                        json += "{\"data\":[";
+
+                        while (res.next())
+                        {
+                            json += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
+                                    + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
+                                    + "\"noOfSeats\": \"" + res.getInt("NoOfSeats") + "\","
+                                    + "\"daysOperating\": \"" + res.getString("DaysOperating") + "\","
+                                    + "\"minLengthOfStay\": \"" + res.getInt("MinLengthOfStay") + "\","
+                                    + "\"maxLengthOfStay\": \"" + res.getInt("MaxLengthOfStay") + "\"},";
+                        }
+
+                        json = json.substring(0, json.length()-1);
+                        json += "]}";
+
+                        System.out.println(json);
+
+                        out.print(json);
                     }
-                    
-                    json = json.substring(0, json.length()-1);
-                    json += "]}";
+                    // list of all flights for given airport
+                    else if (request.getParameter("flightActions").equals("flightsForAirport"))
+                    {
+                        String airportID = request.getParameter("placeholder");
 
-                    System.out.println(json);
+                        String query = "SELECT DISTINCT F.*\n" +
+                                       "FROM Flight F, StopsAt S\n" +
+                                       "WHERE (F.AirlineID = S.AirlineID AND F.FlightNo = S.FlightNo\n" +
+                                       "AND S.AirportID = ?)";
+                        PreparedStatement ps = conn.prepareStatement(query);
+                        ps.setString(1, airportID);
+                        ResultSet res = ps.executeQuery();
 
-                    out.print(json);
+                        json += "{\"data\":[";
+
+                        while (res.next())
+                        {
+                            json += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
+                                    + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
+                                    + "\"noOfSeats\": \"" + res.getInt("NoOfSeats") + "\","
+                                    + "\"daysOperating\": \"" + res.getString("DaysOperating") + "\","
+                                    + "\"minLengthOfStay\": \"" + res.getInt("MinLengthOfStay") + "\","
+                                    + "\"maxLengthOfStay\": \"" + res.getInt("MaxLengthOfStay") + "\"},";
+                        }
+
+                        json = json.substring(0, json.length()-1);
+                        json += "]}";
+
+                        System.out.println(json);
+
+                        out.print(json);
+                    }
+                    // list of most active flights
+                    else if (request.getParameter("flightActions").equals("mostActive"))
+                    {
+                        String query = "SELECT L.AirlineID, L.FlightNo, COUNT(DISTINCT L.ResrNo) "
+                                       + "AS ResrCount\n" +
+                                       "FROM Legs L\n" +
+                                       "GROUP BY L.AirlineID, L.FlightNo\n" +
+                                       "ORDER BY ResrCount DESC, L.AirlineID ASC, L.FlightNo ASC";
+                        PreparedStatement ps = conn.prepareStatement(query);
+                        ResultSet res = ps.executeQuery();
+
+                        json += "{\"data\":[";
+
+                        while (res.next())
+                        {
+                            json += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
+                                    + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
+                                    + "\"resrCount\": \"" + res.getInt("ResrCount") + "\"},";
+                        }
+
+                        json = json.substring(0, json.length()-1);
+                        json += "]}";
+
+                        System.out.println(json);
+
+                        out.print(json);
+                    }
+                    // list of flights whose arrival and departure times on-time
+                    else if (request.getParameter("flightActions").equals("onTime"))
+                    {
+                            String query = "SELECT * FROM Flight F\n" +
+                                    "WHERE NOT EXISTS (\n" +
+                                    "	SELECT * FROM StopsAt S\n" +
+                                    "	WHERE F.AirlineID = S.AirlineID AND F.FlightNo = S.FlightNo\n" +
+                                    "	AND (S.ActualArrTime > S.ArrTime OR S.ActualDepTime > S.DepTime))";
+                            PreparedStatement ps = conn.prepareStatement(query);
+                            ResultSet res = ps.executeQuery();
+
+                            json += "{\"data\":[";
+
+                            while (res.next())
+                            {
+                                json += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
+                                        + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
+                                        + "\"noOfSeats\": \"" + res.getInt("NoOfSeats") + "\","
+                                        + "\"daysOperating\": \"" + res.getString("DaysOperating") + "\","
+                                        + "\"minLengthOfStay\": \"" + res.getInt("MinLengthOfStay") + "\","
+                                        + "\"maxLengthOfStay\": \"" + res.getInt("MaxLengthOfStay") + "\"},";
+                            }
+
+                            json = json.substring(0, json.length()-1);
+                            json += "]}";
+
+                            System.out.println(json);
+
+                            out.print(json);
+                    }
+                    // list of flights whose arrival and departure times delayed
+                    else if(request.getParameter("flightActions").equals("delayed"))
+                    {
+                            String query = "SELECT * FROM Flight F\n" +
+                                    "WHERE EXISTS (\n" +
+                                    "	SELECT * FROM StopsAt S\n" +
+                                    "	WHERE F.AirlineID = S.AirlineID AND F.FlightNo = S.FlightNo\n" +
+                                    "	AND (S.ActualArrTime > S.ArrTime OR S.ActualDepTime > S.DepTime))";
+                            PreparedStatement ps = conn.prepareStatement(query);
+                            ResultSet res = ps.executeQuery();
+
+                            json += "{\"data\":[";
+
+                            while (res.next())
+                            {
+                                json += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
+                                        + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
+                                        + "\"noOfSeats\": \"" + res.getInt("NoOfSeats") + "\","
+                                        + "\"daysOperating\": \"" + res.getString("DaysOperating") + "\","
+                                        + "\"minLengthOfStay\": \"" + res.getInt("MinLengthOfStay") + "\","
+                                        + "\"maxLengthOfStay\": \"" + res.getInt("MaxLengthOfStay") + "\"},";
+                            }
+
+                            json = json.substring(0, json.length()-1);
+                            json += "]}";
+
+                            System.out.println(json);
+
+                            out.print(json);
+                    }
                 }
                 // produce a list of reservations
-                else if (request.getParameter("placeholder").equals("placeholder"))
+                else if (request.getParameter("optionsRadios").equals("reservations"))
                 {
                     String query;
                     PreparedStatement ps;
@@ -327,15 +450,15 @@ public class ManagerServlet extends HttpServlet {
                         out.print(json);
                     }
                 }
-                // produce summary listing of revenue generated
-                else if (request.getParameter("placeholder").equals("placeholder"))
+                // revenue
+                else if (request.getParameter("optionsRadios").equals("revenue"))
                 {
                     String query;
                     PreparedStatement ps;
                     ResultSet res;
                     
-                    // by particular flight
-                    if (request.getParameter("placeholder").equals("placeholder"))
+                    // summary listing of revenue generated by particular flight
+                    if (request.getParameter("revActions").equals("revByFlight"))
                     {
                         String airlineID = request.getParameter("placeholder");
                         String flightNo = request.getParameter("placeholder");
@@ -366,8 +489,8 @@ public class ManagerServlet extends HttpServlet {
 
                         out.print(json);
                     }
-                    // by particular destination city
-                    else if (request.getParameter("placeholder").equals("placeholder"))
+                    // summary listing of revenue generated by particular destination city
+                    else if (request.getParameter("revActions").equals("revByDest"))
                     {
                         String destination = request.getParameter("placeholder");
                         
@@ -411,8 +534,8 @@ public class ManagerServlet extends HttpServlet {
 
                         out.print(json);
                     }
-                    // by particular customer
-                    else if (request.getParameter("placeholder").equals("placeholder"))
+                    // summary listing of revenue generated by particular customer
+                    else if (request.getParameter("revActions").equals("revByCust"))
                     {
                         String accountNo = request.getParameter("placeholder");
                         
@@ -442,209 +565,113 @@ public class ManagerServlet extends HttpServlet {
 
                         out.print(json);
                     }
-                }
-                // customer rep that generated most revenue
-                else if (request.getParameter("placeholder").equals("placeholder"))
-                {
-                    String query = "DROP VIEW CustRepRevenue";
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ps.executeUpdate();
-                    
-                    query = "CREATE VIEW CustRepRevenue(RepSSN, FirstName, LastName, TotalRevenue) AS\n" +
-                            "SELECT R.RepSSN, P.FirstName, P.LastName, SUM(R.TotalFare * 0.1)\n" +
-                            "FROM Reservation R, Person P, Employee E\n" +
-                            "WHERE (R.RepSSN = E.SSN AND P.Id = E.Id)\n" +
-                            "GROUP BY R.RepSSN, P.FirstName, P.LastName";
-                    ps = conn.prepareStatement(query);
-                    ps.executeUpdate();
-                    
-                    conn.commit();
-                    
-                    query = "SELECT C.RepSSN, C.FirstName, C.LastName, C.TotalRevenue\n" +
-                            "FROM CustRepRevenue C\n" +
-                            "WHERE C.TotalRevenue >= (SELECT MAX(C.TotalRevenue) FROM CustRepRevenue C)";
-                    ps = conn.prepareStatement(query);
-                    ResultSet res = ps.executeQuery();
-                    
-                    json += "{\"data\":[";
-
-                    while (res.next())
+                    // customer rep that generated most revenue
+                    else if (request.getParameter("revActions").equals("custRepRev"))
                     {
-                        json += "{\"repSSN\": \"" + res.getInt("RepSSN") + "\","
-                                + "\"firstName\": \"" + res.getString("FirstName") + "\","
-                                + "\"lastName\": \"" + res.getString("LastName") + "\","
-                                + "\"totalRevenue\": \"" + res.getDouble("TotalRevenue") + "\"},";
+                        query = "DROP VIEW CustRepRevenue";
+                        ps = conn.prepareStatement(query);
+                        ps.executeUpdate();
+
+                        query = "CREATE VIEW CustRepRevenue(RepSSN, FirstName, LastName, TotalRevenue) AS\n" +
+                                "SELECT R.RepSSN, P.FirstName, P.LastName, SUM(R.TotalFare * 0.1)\n" +
+                                "FROM Reservation R, Person P, Employee E\n" +
+                                "WHERE (R.RepSSN = E.SSN AND P.Id = E.Id)\n" +
+                                "GROUP BY R.RepSSN, P.FirstName, P.LastName";
+                        ps = conn.prepareStatement(query);
+                        ps.executeUpdate();
+
+                        conn.commit();
+
+                        query = "SELECT C.RepSSN, C.FirstName, C.LastName, C.TotalRevenue\n" +
+                                "FROM CustRepRevenue C\n" +
+                                "WHERE C.TotalRevenue >= (SELECT MAX(C.TotalRevenue) FROM CustRepRevenue C)";
+                        ps = conn.prepareStatement(query);
+                        res = ps.executeQuery();
+
+                        json += "{\"data\":[";
+
+                        while (res.next())
+                        {
+                            json += "{\"repSSN\": \"" + res.getInt("RepSSN") + "\","
+                                    + "\"firstName\": \"" + res.getString("FirstName") + "\","
+                                    + "\"lastName\": \"" + res.getString("LastName") + "\","
+                                    + "\"totalRevenue\": \"" + res.getDouble("TotalRevenue") + "\"},";
+                        }
+
+                        json = json.substring(0, json.length()-1);
+                        json += "]}";
+
+                        System.out.println(json);
+
+                        out.print(json);
                     }
-                    
-                    json = json.substring(0, json.length()-1);
-                    json += "]}";
-
-                    System.out.println(json);
-
-                    out.print(json);
-                }
-                // customer that generated most revenue
-                else if (request.getParameter("placeholder").equals("placeholder"))
-                {
-                    String query = "DROP VIEW CustomerRevenue";
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ps.executeUpdate();
-                    
-                    query = "CREATE VIEW CustomerRevenue(AccountNo, FirstName, LastName, TotalRevenue)  "
-                            + "AS\n" +
-                            "SELECT R.AccountNo, P.FirstName, P.LastName, SUM(R.TotalFare * 0.1)\n" +
-                            "FROM Reservation R, Person P, Customer C\n" +
-                            "WHERE (R.AccountNo = C.AccountNo AND P.Id = C.Id)\n" +
-                            "GROUP BY R.AccountNo, P.FirstName, P.LastName";
-                    ps = conn.prepareStatement(query);
-                    ps.executeUpdate();
-                    
-                    conn.commit();
-                    
-                    query = "SELECT C.AccountNo, C.FirstName, C.LastName, C.TotalRevenue\n" +
-                            "FROM CustomerRevenue C\n" +
-                            "WHERE C.TotalRevenue >= (SELECT MAX(C.TotalRevenue) FROM CustomerRevenue C)";
-                    ps = conn.prepareStatement(query);
-                    ResultSet res = ps.executeQuery();
-                    
-                    json += "{\"data\":[";
-
-                    while (res.next())
+                    // customer that generated most revenue
+                    else if(request.getParameter("revActions").equals("custRev"))
                     {
-                        json += "{\"accountNo\": \"" + res.getInt("AccountNo") + "\","
-                                + "\"firstName\": \"" + res.getString("FirstName") + "\","
-                                + "\"lastName\": \"" + res.getString("LastName") + "\","
-                                + "\"totalRevenue\": \"" + res.getDouble("TotalRevenue") + "\"},";
+                        query = "DROP VIEW CustomerRevenue";
+                        ps = conn.prepareStatement(query);
+                        ps.executeUpdate();
+
+                        query = "CREATE VIEW CustomerRevenue(AccountNo, FirstName, LastName, TotalRevenue)  "
+                                + "AS\n" +
+                                "SELECT R.AccountNo, P.FirstName, P.LastName, SUM(R.TotalFare * 0.1)\n" +
+                                "FROM Reservation R, Person P, Customer C\n" +
+                                "WHERE (R.AccountNo = C.AccountNo AND P.Id = C.Id)\n" +
+                                "GROUP BY R.AccountNo, P.FirstName, P.LastName";
+                        ps = conn.prepareStatement(query);
+                        ps.executeUpdate();
+
+                        conn.commit();
+
+                        query = "SELECT C.AccountNo, C.FirstName, C.LastName, C.TotalRevenue\n" +
+                                "FROM CustomerRevenue C\n" +
+                                "WHERE C.TotalRevenue >= (SELECT MAX(C.TotalRevenue) FROM CustomerRevenue C)";
+                        ps = conn.prepareStatement(query);
+                        res = ps.executeQuery();
+
+                        json += "{\"data\":[";
+
+                        while (res.next())
+                        {
+                            json += "{\"accountNo\": \"" + res.getInt("AccountNo") + "\","
+                                    + "\"firstName\": \"" + res.getString("FirstName") + "\","
+                                    + "\"lastName\": \"" + res.getString("LastName") + "\","
+                                    + "\"totalRevenue\": \"" + res.getDouble("TotalRevenue") + "\"},";
+                        }
+
+                        json = json.substring(0, json.length()-1);
+                        json += "]}";
+
+                        System.out.println(json);
+
+                        out.print(json);
                     }
-                    
-                    json = json.substring(0, json.length()-1);
-                    json += "]}";
-
-                    System.out.println(json);
-
-                    out.print(json);
-                }
-                // list of most active flights
-                else if (request.getParameter("placeholder").equals("placeholder"))
-                {
-                    String query = "SELECT L.AirlineID, L.FlightNo, COUNT(DISTINCT L.ResrNo) "
-                                   + "AS ResrCount\n" +
-                                   "FROM Legs L\n" +
-                                   "GROUP BY L.AirlineID, L.FlightNo\n" +
-                                   "ORDER BY ResrCount DESC, L.AirlineID ASC, L.FlightNo ASC";
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ResultSet res = ps.executeQuery();
-                    
-                    json += "{\"data\":[";
-
-                    while (res.next())
-                    {
-                        json += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
-                                + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
-                                + "\"resrCount\": \"" + res.getInt("ResrCount") + "\"},";
-                    }
-                    
-                    json = json.substring(0, json.length()-1);
-                    json += "]}";
-
-                    System.out.println(json);
-
-                    out.print(json);
                 }
                 // list of customers who have seats reserved on given flight
-                else if (request.getParameter("placeholder").equals("placeholder"))
+                else if (request.getParameter("optionsRadios").equals("customers"))
                 {
-                    String airlineID = request.getParameter("placeholder");
-                    String flightNo = request.getParameter("placeholder");
-                    
-                    String query = "SELECT DISTINCT R.AccountNo, R.Id, P.FirstName, P.LastName, "
-                                   + "R.SeatNo\n" +
-                                   "FROM ReservationPassenger R, Person P, Legs L\n" +
-                                   "WHERE (R.Id = P.Id AND R.ResrNo = L.ResrNo AND L.AirlineID = ? "
-                                   + "AND L.FlightNo = ?)";
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ps.setString(1, airlineID);
-                    ps.setInt(2, Integer.parseInt(flightNo));
-                    ResultSet res = ps.executeQuery();
-                    
-                    json += "{\"data\":[";
+                        String airlineID = request.getParameter("placeholder");
+                        String flightNo = request.getParameter("placeholder");
 
-                    while (res.next())
-                    {
-                        json += "{\"accountNo\": \"" + res.getInt("AccountNo") + "\","
-                                + "\"id\": \"" + res.getInt("Id") + "\","
-                                + "\"firstName\": \"" + res.getString("FirstName") + "\","
-                                + "\"lastName\": \"" + res.getString("LastName") + "\","
-                                + "\"seatNo\": \"" + res.getString("SeatNo") + "\"},";
-                    }
-                    
-                    json = json.substring(0, json.length()-1);
-                    json += "]}";
+                        String query = "SELECT DISTINCT R.AccountNo, R.Id, P.FirstName, P.LastName, "
+                                       + "R.SeatNo\n" +
+                                       "FROM ReservationPassenger R, Person P, Legs L\n" +
+                                       "WHERE (R.Id = P.Id AND R.ResrNo = L.ResrNo AND L.AirlineID = ? "
+                                       + "AND L.FlightNo = ?)";
+                        PreparedStatement ps = conn.prepareStatement(query);
+                        ps.setString(1, airlineID);
+                        ps.setInt(2, Integer.parseInt(flightNo));
+                        ResultSet res = ps.executeQuery();
 
-                    System.out.println(json);
-
-                    out.print(json);
-                }
-                // list of all flights for given airport
-                else if (request.getParameter("placeholder").equals("placeholder"))
-                {
-                    String airportID = request.getParameter("placeholder");
-                    
-                    String query = "SELECT DISTINCT F.*\n" +
-                                   "FROM Flight F, StopsAt S\n" +
-                                   "WHERE (F.AirlineID = S.AirlineID AND F.FlightNo = S.FlightNo\n" +
-                                   "AND S.AirportID = ?)";
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ps.setString(1, airportID);
-                    ResultSet res = ps.executeQuery();
-                    
-                    json += "{\"data\":[";
-
-                    while (res.next())
-                    {
-                        json += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
-                                + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
-                                + "\"noOfSeats\": \"" + res.getInt("NoOfSeats") + "\","
-                                + "\"daysOperating\": \"" + res.getString("DaysOperating") + "\","
-                                + "\"minLengthOfStay\": \"" + res.getInt("MinLengthOfStay") + "\","
-                                + "\"maxLengthOfStay\": \"" + res.getInt("MaxLengthOfStay") + "\"},";
-                    }
-                    
-                    json = json.substring(0, json.length()-1);
-                    json += "]}";
-
-                    System.out.println(json);
-
-                    out.print(json);
-                }
-                // list of flights whose arrival and departure times on-time/delayed
-                else if (request.getParameter("placeholder").equals("placeholder"))
-                {
-                    String query;
-                    PreparedStatement ps;
-                    ResultSet res;
-                    
-                    // on-time
-                    if (request.getParameter("placeholder").equals("placeholder"))
-                    {
-                        query = "SELECT * FROM Flight F\n" +
-                                "WHERE NOT EXISTS (\n" +
-                                "	SELECT * FROM StopsAt S\n" +
-                                "	WHERE F.AirlineID = S.AirlineID AND F.FlightNo = S.FlightNo\n" +
-                                "	AND (S.ActualArrTime > S.ArrTime OR S.ActualDepTime > S.DepTime))";
-                        ps = conn.prepareStatement(query);
-                        res = ps.executeQuery();
-                        
                         json += "{\"data\":[";
 
                         while (res.next())
                         {
-                            json += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
-                                    + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
-                                    + "\"noOfSeats\": \"" + res.getInt("NoOfSeats") + "\","
-                                    + "\"daysOperating\": \"" + res.getString("DaysOperating") + "\","
-                                    + "\"minLengthOfStay\": \"" + res.getInt("MinLengthOfStay") + "\","
-                                    + "\"maxLengthOfStay\": \"" + res.getInt("MaxLengthOfStay") + "\"},";
+                            json += "{\"accountNo\": \"" + res.getInt("AccountNo") + "\","
+                                    + "\"id\": \"" + res.getInt("Id") + "\","
+                                    + "\"firstName\": \"" + res.getString("FirstName") + "\","
+                                    + "\"lastName\": \"" + res.getString("LastName") + "\","
+                                    + "\"seatNo\": \"" + res.getString("SeatNo") + "\"},";
                         }
 
                         json = json.substring(0, json.length()-1);
@@ -653,37 +680,6 @@ public class ManagerServlet extends HttpServlet {
                         System.out.println(json);
 
                         out.print(json);
-                    }
-                    // delayed
-                    else if(request.getParameter("placeholder").equals("placeholder"))
-                    {
-                        query = "SELECT * FROM Flight F\n" +
-                                "WHERE EXISTS (\n" +
-                                "	SELECT * FROM StopsAt S\n" +
-                                "	WHERE F.AirlineID = S.AirlineID AND F.FlightNo = S.FlightNo\n" +
-                                "	AND (S.ActualArrTime > S.ArrTime OR S.ActualDepTime > S.DepTime))";
-                        ps = conn.prepareStatement(query);
-                        res = ps.executeQuery();
-                        
-                        json += "{\"data\":[";
-
-                        while (res.next())
-                        {
-                            json += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
-                                    + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
-                                    + "\"noOfSeats\": \"" + res.getInt("NoOfSeats") + "\","
-                                    + "\"daysOperating\": \"" + res.getString("DaysOperating") + "\","
-                                    + "\"minLengthOfStay\": \"" + res.getInt("MinLengthOfStay") + "\","
-                                    + "\"maxLengthOfStay\": \"" + res.getInt("MaxLengthOfStay") + "\"},";
-                        }
-
-                        json = json.substring(0, json.length()-1);
-                        json += "]}";
-
-                        System.out.println(json);
-
-                        out.print(json);
-                    }
                 }
         } catch(Exception e){
                 e.printStackTrace();

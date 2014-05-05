@@ -217,6 +217,32 @@ $(document).ready(function() {
             return false;
         });
     });
+    
+    $(function() {
+        $('#').submit(function() {
+            $('#').html("");
+            $.post('manager', $(this).serialize(), function(jsonData) {
+                $('#').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
+                                <th>LegNo</th><th>DepTime</th><th>From</th><th>ArrTime</th>\n\
+                                <th>To</th><th>Book Flight</th></tr></thead>");
+
+                var parsedJSON = jQuery.parseJSON(jsonData);
+                var flightInfo;
+                
+                for (var i = 0; i < parsedJSON.data.length; i++)
+                {
+                        flightInfo = parsedJSON.data[i];
+
+                        $('#flight-data').append('<tr><td>' + flightInfo.airlineID + '</td><td>' + 
+                                flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
+                                flightInfo.depTime + '</td><td>' + flightInfo.fromAirport + '</td><td>' +
+                                flightInfo.arrTime + '</td><td>' + flightInfo.toAirport + '</td></tr>');
+                }
+
+            });
+            return false;
+        });
+    });
 });
 
 function makeRequest(request, response) {
