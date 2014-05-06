@@ -38,9 +38,9 @@
                 <div class="content">
 
                     <h2 class="content-subhead">Select a category</h2>
-
-
-                    <div class="pure-menu pure-menu-open pure-menu-horizontal" id="managerHeaderMenu">
+                    
+                    <form id="managerForm" class="pure-form pure-form-stacked">
+                        <div class="pure-menu pure-menu-open pure-menu-horizontal" id="managerHeaderMenu">
                         <label for="employees" class="pure-radio">                                                
                             <input id="employees" type="radio" name="optionsRadios" value="employees" checked> Employees                                        
                         </label>
@@ -91,8 +91,6 @@
                         - Obtain a sales report for a particular month
                                 
                     -->
-                    
-                    <form id="managerForm" class="pure-form pure-form-stacked">
                         <fieldset id="s0">
                             <legend><strong>Employees</strong></legend>
                             
