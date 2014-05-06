@@ -122,26 +122,7 @@
                                     <div class="pure-u-1 pure-u-med-1-3">
                                         Relevant table
                                         <table id="employee-data" class="pure-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Name</th>
-                                                    <th>SSN</th>
-                                                    <th>---</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>0000</td>
-                                                    <td>Boone</td>
-                                                    <td>12301240924</td>
-                                                    <td>
-                                                        <button class="pure-button-secondary" id="emp-edit-button">Edit</button>
-                                                        &nbsp;&nbsp;&nbsp;
-                                                        <button class="pure-button-secondary" id="emp-delete-button">Delete</button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
+                                            
                                         </table>
                                     </div>
                                 </div>
@@ -158,7 +139,7 @@
                                         </label>
                                         <label for="flightsForAirport" class="pure-radio">
                                             <input id="flightsForAirport" type="radio" name="flightActions" value="flightsForAirport">
-                                            View all flights for airports
+                                            View all flights for airport
                                         </label>
                                         <label for="mostActive" class="pure-radio">
                                             <input id="mostActive" type="radio" name="flightActions" value="mostActive">
@@ -186,20 +167,7 @@
                                     <div class="pure-u-1 pure-u-med-1-3">
                                         Relevant table
                                         <table id="flight-data" class="pure-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>qwewrqt</th>
-                                                    <th>wwerwwer</th>
-                                                    <th>zzzzsd</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>wat</td>
-                                                    <td>fdsssss</td>
-                                                    <td>2222</td>
-                                                </tr>
-                                            </tbody>
+                                            
                                         </table>
                                     </div>
                                 </div>
@@ -220,20 +188,7 @@
                                     <div class="pure-u-1 pure-u-med-1-3">
                                         Relevant table
                                         <table id="customer-data" class="pure-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>ID</th>
-                                                    <th>Name</th>
-                                                    <th>Credit card</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>2000</td>
-                                                    <td>Barney</td>
-                                                    <td>917098092897</td>
-                                                </tr>
-                                            </tbody>
+                                            
                                         </table>
                                     </div>
                                 </div>
@@ -415,17 +370,71 @@
                         }*/
                          $("#managerHeaderMenu").click(function(){
                             if ( $("#employees").is(":checked") )
+                            {
                                 displayNum(0);
+                                // clear results when switching between tabs
+                                $('#employee-data').html("");
+                                $('#flight-data').html("");
+                                $('#customer-data').html("");
+                                $('#reservation-data').html("");
+                                $('#revenue-data').html("");
+                                $('#sales-report-data').html("");
+                            }
                             else if ( $("#flights").is(":checked") )
+                            {
                                 displayNum(1);
+                                // clear results when switching between tabs
+                                $('#employee-data').html("");
+                                $('#flight-data').html("");
+                                $('#customer-data').html("");
+                                $('#reservation-data').html("");
+                                $('#revenue-data').html("");
+                                $('#sales-report-data').html("");
+                            }
                             else if ( $("#customers").is(":checked") )
+                            {
                                 displayNum(2);
+                                // clear results when switching between tabs
+                                $('#employee-data').html("");
+                                $('#flight-data').html("");
+                                $('#customer-data').html("");
+                                $('#reservation-data').html("");
+                                $('#revenue-data').html("");
+                                $('#sales-report-data').html("");
+                            }
                             else if ( $("#reservations").is(":checked") )
+                            {
                                 displayNum(3);
+                                // clear results when switching between tabs
+                                $('#employee-data').html("");
+                                $('#flight-data').html("");
+                                $('#customer-data').html("");
+                                $('#reservation-data').html("");
+                                $('#revenue-data').html("");
+                                $('#sales-report-data').html("");
+                            }
                             else if ( $("#revenue").is(":checked") )
+                            {
                                 displayNum(4);
+                                // clear results when switching between tabs
+                                $('#employee-data').html("");
+                                $('#flight-data').html("");
+                                $('#customer-data').html("");
+                                $('#reservation-data').html("");
+                                $('#revenue-data').html("");
+                                $('#sales-report-data').html("");
+                            }
                             else if ( $("#salesreport").is(":checked") )
+                            {
                                 displayNum(5);
+                                // clear results when switching between tabs
+                                $('#employee-data').html("");
+                                $('#flight-data').html("");
+                                $('#customer-data').html("");
+                                $('#reservation-data').html("");
+                                $('#revenue-data').html("");
+                                $('#sales-report-data').html("");
+                            }
                           });
                         
                         $("#btn0").click(function(event){

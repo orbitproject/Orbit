@@ -449,8 +449,10 @@ public class ManagerServlet extends HttpServlet {
                     // by customer name
                     if (request.getParameter("res-search-type").equals("1"))
                     {
-                        String firstName = request.getParameter("resFirstName");
-                        String lastName = request.getParameter("resLastName");
+                        String firstName = "John";
+                        String lastName = "Doe";
+                        /*String firstName = request.getParameter("resFirstName");
+                        String lastName = request.getParameter("resLastName");*/
                         
                         query = "SELECT DISTINCT R.ResrNo, R.ResrDate, R.BookingFee, R.TotalFare, "
                                 + "R.RepSSN, P.FirstName, P.LastName\n" +
@@ -498,11 +500,26 @@ public class ManagerServlet extends HttpServlet {
                         /*String airlineID = request.getParameter("placeholder");
                         String flightNo = request.getParameter("placeholder");*/
                         
-                        query = "SELECT DISTINCT L.AirlineID, L.FlightNo, R.TotalFare * 0.1"
-                                + "AS Revenue\n" +
-                                 "FROM Reservation R, Legs L\n" +
-                                 "WHERE L.ResrNo = R.ResrNo AND L.AirlineID = ? "
-                                + "AND L.FlightNo = ?";
+                        query = "DROP VIEW FlightRevenue";
+                        ps = conn.prepareStatement(query);
+                        ps.executeUpdate();
+                        
+                        query = "CREATE VIEW FlightRevenue(ResrNo, AirlineID, FlightNo, LegNo, Revenue) "
+                                + "AS\n" +
+                                "SELECT DISTINCT L.ResrNo, L.AirlineID, L.FlightNo, L.LegNo, "
+                                + "R.TotalFare * 0.1\n" +
+                                "FROM Reservation R, Legs L\n" +
+                                "WHERE L.ResrNo = R.ResrNo\n" +
+                                "GROUP BY L.ResrNo, L.AirlineID, L.FlightNo";
+                        ps = conn.prepareStatement(query);
+                        ps.executeUpdate();
+                        
+                        conn.commit();
+                        
+                        query = "SELECT AirlineID, FlightNo, SUM(Revenue) AS Revenue\n" +
+                                "FROM FlightRevenue\n" +
+                                "WHERE (AirlineID = ? AND FlightNo = ?)\n" +
+                                "GROUP BY AirlineID, FlightNo";
                         ps = conn.prepareStatement(query);
                         ps.setString(1, airlineID);
                         ps.setInt(2, Integer.parseInt(flightNo));
