@@ -92,7 +92,7 @@
                                 
                     -->
                     
-                    <form id="managerForm" class="pure-form pure-form-stacked" method="POST" action='signup'> <!-- TODO: add servlet to post to -->
+                    <form id="managerForm" class="pure-form pure-form-stacked">
                         <fieldset id="s0">
                             <legend><strong>Employees</strong></legend>
                             

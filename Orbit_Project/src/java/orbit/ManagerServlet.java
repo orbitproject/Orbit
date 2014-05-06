@@ -65,7 +65,24 @@ public class ManagerServlet extends HttpServlet {
                     // add
                     if (request.getParameter("empActions").equals("add"))
                     {
-                        String firstName = request.getParameter("placeholder");
+                        String firstName = "Ben";
+                        String lastName = "Stevens";
+                        String address = "234 Orbit Dr";
+                        String city = "Stony Brook";
+                        String state = "New York";
+                        String zip = "11790";
+                        String ssn = "987685434";
+                        String isManagerString = "no";
+                        boolean isManager;
+                        if (isManagerString.toUpperCase().equals("YES"))
+                            isManager = true;
+                        else
+                            isManager = false;
+                        String startDate = "2011-05-05";
+                        String hourlyRate = "12.00";
+                        String email = "ben.stevens@gmail.com";
+                        String password = "test";
+                        /*String firstName = request.getParameter("placeholder");
                         String lastName = request.getParameter("placeholder");
                         String address = request.getParameter("placeholder");
                         String city = request.getParameter("placeholder");
@@ -81,7 +98,7 @@ public class ManagerServlet extends HttpServlet {
                         String startDate = request.getParameter("placeholder");
                         String hourlyRate = request.getParameter("placeholder");
                         String email = request.getParameter("email");
-                        String password = request.getParameter("password");
+                        String password = request.getParameter("password");*/
 
                         String query = "SELECT * FROM Person";
                         PreparedStatement ps = conn.prepareStatement(query);
@@ -121,7 +138,17 @@ public class ManagerServlet extends HttpServlet {
                     // update
                     else if (request.getParameter("empActions").equals("update"))
                     {
-                        String ssn = request.getParameter("placeholder");
+                        String ssn = "987685434";
+                        String isManagerString = "yes";
+                        boolean isManager;
+                        if (isManagerString.toUpperCase().equals("YES"))
+                            isManager = true;
+                        else
+                            isManager = false;
+                        String hourlyRate = "14.00";
+                        String email = "";
+                        String password = "";
+                        /*String ssn = request.getParameter("placeholder");
                         String isManagerString = request.getParameter("placeholder");
                         boolean isManager;
                         if (isManagerString.equals("placeholder"))
@@ -130,7 +157,7 @@ public class ManagerServlet extends HttpServlet {
                             isManager = false;
                         String hourlyRate = request.getParameter("placeholder");
                         String email = request.getParameter("placeholder");
-                        String password = request.getParameter("placeholder");
+                        String password = request.getParameter("placeholder");*/
 
                         String query;
                         PreparedStatement ps;
@@ -178,7 +205,8 @@ public class ManagerServlet extends HttpServlet {
                     // delete
                     else if (request.getParameter("empActions").equals("delete"))
                     {
-                        String ssn = request.getParameter("placeholder");
+                        String ssn = "987685434";
+                        //String ssn = request.getParameter("placeholder");
 
                         String query = "DELETE FROM Employee WHERE SSN = ?";
                         PreparedStatement ps = conn.prepareStatement(query);
@@ -190,8 +218,10 @@ public class ManagerServlet extends HttpServlet {
                 // obtain sales report for particular month
                 else if (request.getParameter("optionsRadios").equals("salesreport"))
                 {
-                    String afterDate = request.getParameter("sales-month-afterdate");
-                    String beforeDate = request.getParameter("sales-month-beforedate");
+                    String afterDate = "2010-12-31";
+                    String beforeDate = "2011-02-01";
+                    /*String afterDate = request.getParameter("sales-month-afterdate");
+                    String beforeDate = request.getParameter("sales-month-beforedate");*/
                     
                     String query = "SELECT DISTINCT L.AirlineID, L.FlightNo, SUM(R.TotalFare) "
                             + "AS TotalSales\n" +
@@ -252,7 +282,8 @@ public class ManagerServlet extends HttpServlet {
                     // list of all flights for given airport
                     else if (request.getParameter("flightActions").equals("flightsForAirport"))
                     {
-                        String airportID = request.getParameter("placeholder");
+                        String airportID = "LGA";
+                        //String airportID = request.getParameter("placeholder");
 
                         String query = "SELECT DISTINCT F.*\n" +
                                        "FROM Flight F, StopsAt S\n" +
@@ -379,8 +410,10 @@ public class ManagerServlet extends HttpServlet {
                     // by flight number
                     if (request.getParameter("res-search-type").equals("0"))
                     {
-                        String airlineID = request.getParameter("resAirlineID");
-                        String flightNo = request.getParameter("resFlightNo");
+                        String airlineID = "AA";
+                        String flightNo = "111";
+                        /*String airlineID = request.getParameter("resAirlineID");
+                        String flightNo = request.getParameter("resFlightNo");*/
                         
                         query = "SELECT DISTINCT R.ResrNo, R.ResrDate, R.BookingFee, R.TotalFare, "
                                 + "R.RepSSN, P.FirstName, P.LastName\n" +
@@ -460,8 +493,10 @@ public class ManagerServlet extends HttpServlet {
                     // summary listing of revenue generated by particular flight
                     if (request.getParameter("revActions").equals("revByFlight"))
                     {
-                        String airlineID = request.getParameter("placeholder");
-                        String flightNo = request.getParameter("placeholder");
+                        String airlineID = "AA";
+                        String flightNo = "111";
+                        /*String airlineID = request.getParameter("placeholder");
+                        String flightNo = request.getParameter("placeholder");*/
                         
                         query = "SELECT DISTINCT L.AirlineID, L.FlightNo, R.TotalFare * 0.1"
                                 + "AS Revenue\n" +
@@ -492,7 +527,8 @@ public class ManagerServlet extends HttpServlet {
                     // summary listing of revenue generated by particular destination city
                     else if (request.getParameter("revActions").equals("revByDest"))
                     {
-                        String destination = request.getParameter("placeholder");
+                        String destination = "London";
+                        //String destination = request.getParameter("placeholder");
                         
                         query = "DROP VIEW FlightStops";
                         ps = conn.prepareStatement(query);
@@ -537,7 +573,8 @@ public class ManagerServlet extends HttpServlet {
                     // summary listing of revenue generated by particular customer
                     else if (request.getParameter("revActions").equals("revByCust"))
                     {
-                        String accountNo = request.getParameter("placeholder");
+                        String accountNo = "2001";
+                        //String accountNo = request.getParameter("placeholder");
                         
                         query = "SELECT R.AccountNo, P.FirstName, P.LastName, SUM(R.TotalFare * 0.1) "
                                 + "AS Revenue\n" +
@@ -650,8 +687,10 @@ public class ManagerServlet extends HttpServlet {
                 // list of customers who have seats reserved on given flight
                 else if (request.getParameter("optionsRadios").equals("customers"))
                 {
-                        String airlineID = request.getParameter("placeholder");
-                        String flightNo = request.getParameter("placeholder");
+                        String airlineID = "AA";
+                        String flightNo = "111";
+                        /*String airlineID = request.getParameter("placeholder");
+                        String flightNo = request.getParameter("placeholder");*/
 
                         String query = "SELECT DISTINCT R.AccountNo, R.Id, P.FirstName, P.LastName, "
                                        + "R.SeatNo\n" +

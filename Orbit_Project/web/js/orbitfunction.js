@@ -219,26 +219,239 @@ $(document).ready(function() {
     });
     
     $(function() {
-        $('#').submit(function() {
-            $('#').html("");
+        $('#managerForm').submit(function() {
+            $('#test-data').html("");
             $.post('manager', $(this).serialize(), function(jsonData) {
-                $('#').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
-                                <th>LegNo</th><th>DepTime</th><th>From</th><th>ArrTime</th>\n\
-                                <th>To</th><th>Book Flight</th></tr></thead>");
-
                 var parsedJSON = jQuery.parseJSON(jsonData);
-                var flightInfo;
+                var rowInfo;
                 
-                for (var i = 0; i < parsedJSON.data.length; i++)
+                if ($('#employees').is(':checked'))
                 {
-                        flightInfo = parsedJSON.data[i];
-
-                        $('#flight-data').append('<tr><td>' + flightInfo.airlineID + '</td><td>' + 
-                                flightInfo.flightNo + '</td><td>' + flightInfo.legNo + '</td><td>' +
-                                flightInfo.depTime + '</td><td>' + flightInfo.fromAirport + '</td><td>' +
-                                flightInfo.arrTime + '</td><td>' + flightInfo.toAirport + '</td></tr>');
+                    if ($('#add').is(':checked'))
+                    {
+                        // returns nothing right now
+                    }
+                    else if ($('#update').is(':checked'))
+                    {
+                        // returns nothing right now
+                    }
+                    else if ($('#delete').is(':checked'))
+                    {
+                        // returns nothing right now
+                    }
                 }
+                else if ($('#flights').is(':checked'))
+                {
+                    if ($('#allFlights').is(':checked'))
+                    {
+                        $('#test-data').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
+                            <th>NoOfSeats</th><th>DaysOperating</th><th>MinLengthOfStay</th>\n\
+                            <th>MaxLengthOfStay</th></tr></thead>");
 
+                        for (var i = 0; i < parsedJSON.data.length; i++)
+                        {
+                            rowInfo = parsedJSON.data[i];
+
+                            $('#test-data').append('<tr><td>' + rowInfo.airlineID + '</td><td>' + 
+                                rowInfo.flightNo + '</td><td>' + rowInfo.noOfSeats + '</td><td>' +
+                                rowInfo.daysOperating + '</td><td>' + rowInfo.minLengthOfStay + '</td><td>' +
+                                rowInfo.maxLengthOfStay + '</td></tr>');
+                        }
+                    }
+                    else if ($('#flightsForAirport').is(':checked'))
+                    {
+                        $('#test-data').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
+                            <th>NoOfSeats</th><th>DaysOperating</th><th>MinLengthOfStay</th>\n\
+                            <th>MaxLengthOfStay</th></tr></thead>");
+
+                        for (var i = 0; i < parsedJSON.data.length; i++)
+                        {
+                            rowInfo = parsedJSON.data[i];
+
+                            $('#test-data').append('<tr><td>' + rowInfo.airlineID + '</td><td>' + 
+                                rowInfo.flightNo + '</td><td>' + rowInfo.noOfSeats + '</td><td>' +
+                                rowInfo.daysOperating + '</td><td>' + rowInfo.minLengthOfStay + '</td><td>' +
+                                rowInfo.maxLengthOfStay + '</td></tr>');
+                        }
+                    }
+                    else if ($('#mostActive').is(':checked'))
+                    {
+                        $('#test-data').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
+                            <th>ResrCount</th></tr></thead>");
+
+                        for (var i = 0; i < parsedJSON.data.length; i++)
+                        {
+                            rowInfo = parsedJSON.data[i];
+
+                            $('#test-data').append('<tr><td>' + rowInfo.airlineID + '</td><td>' + 
+                                rowInfo.flightNo + '</td><td>' + rowInfo.resrCount + '</td></tr>');
+                        }
+                    }
+                    else if ($('#onTime').is(':checked'))
+                    {
+                        $('#test-data').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
+                            <th>NoOfSeats</th><th>DaysOperating</th><th>MinLengthOfStay</th>\n\
+                            <th>MaxLengthOfStay</th></tr></thead>");
+
+                        for (var i = 0; i < parsedJSON.data.length; i++)
+                        {
+                            rowInfo = parsedJSON.data[i];
+
+                            $('#test-data').append('<tr><td>' + rowInfo.airlineID + '</td><td>' + 
+                                rowInfo.flightNo + '</td><td>' + rowInfo.noOfSeats + '</td><td>' +
+                                rowInfo.daysOperating + '</td><td>' + rowInfo.minLengthOfStay + '</td><td>' +
+                                rowInfo.maxLengthOfStay + '</td></tr>');
+                        }
+                    }
+                    else if ($('#delayed').is(':checked'))
+                    {
+                        $('#test-data').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
+                            <th>NoOfSeats</th><th>DaysOperating</th><th>MinLengthOfStay</th>\n\
+                            <th>MaxLengthOfStay</th></tr></thead>");
+
+                        for (var i = 0; i < parsedJSON.data.length; i++)
+                        {
+                            rowInfo = parsedJSON.data[i];
+
+                            $('#test-data').append('<tr><td>' + rowInfo.airlineID + '</td><td>' + 
+                                rowInfo.flightNo + '</td><td>' + rowInfo.noOfSeats + '</td><td>' +
+                                rowInfo.daysOperating + '</td><td>' + rowInfo.minLengthOfStay + '</td><td>' +
+                                rowInfo.maxLengthOfStay + '</td></tr>');
+                        }
+                    }
+                }
+                else if ($('#customers').is(':checked'))
+                {
+                    $('#test-data').append("<thead><tr><th>AccountNo</th><th>Id</th>\n\
+                        <th>FirstName</th><th>LastName</th><th>SeatNo</th></tr></thead>");
+
+                    for (var i = 0; i < parsedJSON.data.length; i++)
+                    {
+                        rowInfo = parsedJSON.data[i];
+
+                        $('#test-data').append('<tr><td>' + rowInfo.accountNo + '</td><td>' + 
+                            rowInfo.id + '</td><td>' + rowInfo.firstName + '</td><td>' +
+                            rowInfo.lastName + '</td><td>' + rowInfo.seatNo + '</td></tr>');
+                    }
+                }
+                else if ($('#reservations').is(':checked'))
+                {
+                    if ($('#res-flight-num').is(':checked'))
+                    {
+                        $('#test-data').append("<thead><tr><th>ResrNo</th><th>ResrDate</th>\n\
+                            <th>BookingFee</th><th>TotalFare</th><th>RepSSN</th>\n\
+                            <th>FirstName</th><th>LastName</th></tr></thead>");
+
+                        for (var i = 0; i < parsedJSON.data.length; i++)
+                        {
+                            rowInfo = parsedJSON.data[i];
+
+                            $('#test-data').append('<tr><td>' + rowInfo.resrNo + '</td><td>' + 
+                                rowInfo.resrDate + '</td><td>' + rowInfo.bookingFee + '</td><td>' +
+                                rowInfo.totalFare + '</td><td>' + rowInfo.repSSN + '</td><td>' +
+                                rowInfo.firstName + '</td><td>' + rowInfo.lastName + '</td></tr>');
+                        }
+                    }
+                    else if ($('#res-cust-name').is(':checked'))
+                    {
+                        $('#test-data').append("<thead><tr><th>ResrNo</th><th>ResrDate</th>\n\
+                            <th>BookingFee</th><th>TotalFare</th><th>RepSSN</th>\n\
+                            <th>FirstName</th><th>LastName</th></tr></thead>");
+
+                        for (var i = 0; i < parsedJSON.data.length; i++)
+                        {
+                            rowInfo = parsedJSON.data[i];
+
+                            $('#test-data').append('<tr><td>' + rowInfo.resrNo + '</td><td>' + 
+                                rowInfo.resrDate + '</td><td>' + rowInfo.bookingFee + '</td><td>' +
+                                rowInfo.totalFare + '</td><td>' + rowInfo.repSSN + '</td><td>' +
+                                rowInfo.firstName + '</td><td>' + rowInfo.lastName + '</td></tr>');
+                        }
+                    }
+                }
+                else if ($('#revenue').is(':checked'))
+                {
+                    if ($('#revByFlight').is(':checked'))
+                    {
+                        $('#test-data').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
+                            <th>Revenue</th></tr></thead>");
+
+                        for (var i = 0; i < parsedJSON.data.length; i++)
+                        {
+                            rowInfo = parsedJSON.data[i];
+
+                            $('#test-data').append('<tr><td>' + rowInfo.airlineID + '</td><td>' + 
+                                rowInfo.flightNo + '</td><td>' + rowInfo.revenue + '</td></tr>');
+                        }
+                    }
+                    else if ($('#revByDest').is(':checked'))
+                    {
+                        $('#test-data').append("<thead><tr><th>City</th><th>Revenue</th></tr></thead>");
+
+                        for (var i = 0; i < parsedJSON.data.length; i++)
+                        {
+                            rowInfo = parsedJSON.data[i];
+
+                            $('#test-data').append('<tr><td>' + rowInfo.city + '</td><td>' + 
+                                rowInfo.revenue + '</td></tr>');
+                        }
+                    }
+                    else if ($('#revByCust').is(':checked'))
+                    {
+                        $('#test-data').append("<thead><tr><th>AccountNo</th><th>FirstName</th>\n\
+                            <th>LastName</th><th>Revenue</th></tr></thead>");
+
+                        for (var i = 0; i < parsedJSON.data.length; i++)
+                        {
+                            rowInfo = parsedJSON.data[i];
+
+                            $('#test-data').append('<tr><td>' + rowInfo.accountNo + '</td><td>' + 
+                                rowInfo.firstName + '</td><td>' + rowInfo.lastName + '</td><td>' +
+                                rowInfo.revenue + '</td></tr>');
+                        }
+                    }
+                    else if ($('#custRepRev').is(':checked'))
+                    {
+                        $('#test-data').append("<thead><tr><th>RepSSN</th><th>FirstName</th>\n\
+                            <th>LastName</th><th>TotalRevenue</th></tr></thead>");
+
+                        for (var i = 0; i < parsedJSON.data.length; i++)
+                        {
+                            rowInfo = parsedJSON.data[i];
+
+                            $('#test-data').append('<tr><td>' + rowInfo.repSSN + '</td><td>' + 
+                                rowInfo.firstName + '</td><td>' + rowInfo.lastName + '</td><td>' +
+                                rowInfo.totalRevenue + '</td></tr>');
+                        }
+                    }
+                    else if ($('#custRev').is(':checked'))
+                    {
+                        $('#test-data').append("<thead><tr><th>AccountNo</th><th>FirstName</th>\n\
+                            <th>LastName</th><th>TotalRevenue</th></tr></thead>");
+
+                        for (var i = 0; i < parsedJSON.data.length; i++)
+                        {
+                            rowInfo = parsedJSON.data[i];
+
+                            $('#test-data').append('<tr><td>' + rowInfo.accountNo + '</td><td>' + 
+                                rowInfo.firstName + '</td><td>' + rowInfo.lastName + '</td><td>' +
+                                rowInfo.totalRevenue + '</td></tr>');
+                        }
+                    }
+                }
+                else if ($('#salesreport').is(':checked'))
+                {
+                     $('#test-data').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
+                        <th>TotalSales</th></tr></thead>");
+
+                    for (var i = 0; i < parsedJSON.data.length; i++)
+                    {
+                        rowInfo = parsedJSON.data[i];
+
+                        $('#test-data').append('<tr><td>' + rowInfo.airlineID + '</td><td>' + 
+                            rowInfo.flightNo + '</td><td>' + rowInfo.totalSales + '</td></tr>');
+                    }
+                }
             });
             return false;
         });
