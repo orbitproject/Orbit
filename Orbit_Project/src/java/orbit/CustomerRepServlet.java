@@ -316,7 +316,7 @@ public class CustomerRepServlet extends HttpServlet {
                                 + "\"address\": \"" + res.getString("Address") + "\","
                                 + "\"city\": \"" + res.getString("City") + "\","
                                 + "\"state\": \"" + res.getString("State") + "\","
-                                + "\"zipCode\": \"" + res.getDouble("ZipCode") + "\"},";
+                                + "\"zipCode\": \"" + res.getInt("ZipCode") + "\"},";
                     }
                     
                     json = json.substring(0, json.length()-1);
