@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Jessica
  */
-public class CustomerRepServlet extends HttpServlet {
+public class CustomerServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -57,7 +57,7 @@ public class CustomerRepServlet extends HttpServlet {
 
                 conn.setAutoCommit(false);
                 
-                // record reservation
+                // make a reservation
                 if (request.getParameter("optionsRadios").equals(""))
                 {
                     String passCount = request.getParameter("passCount");
@@ -165,158 +165,54 @@ public class CustomerRepServlet extends HttpServlet {
                         conn.commit();
                     }
                 }
-                // add customer
+                // cancel existing reservation
                 else if (request.getParameter("optionsRadios").equals(""))
                 {
-                        String firstName = request.getParameter("firstName");
-                        String lastName = request.getParameter("lastName");
-                        String address = request.getParameter("address");
-                        String city = request.getParameter("city");
-                        String state = request.getParameter("state");
-                        String zip = request.getParameter("zip");
-                        String creditCardNo = request.getParameter("creditCardNo");
-                        String email = request.getParameter("email");
-                        String rating = request.getParameter("rating");
-                        String password = request.getParameter("password");
-                        
-                        String query = "SELECT * FROM Person";
-                        PreparedStatement ps = conn.prepareStatement(query);
-                        ResultSet res = ps.executeQuery();
-                        int id = 1;
-
-                        if (res.next())
-                        {
-                            res.last();
-                            id = res.getInt("Id") + 1;
-                        }
-                        
-                        query = "INSERT INTO Person VALUES (?, ?, ?, ?, ?, ?, ?)";
-                        ps = conn.prepareStatement(query);
-                        ps.setInt(1, id);
-                        ps.setString(2, firstName);
-                        ps.setString(3, lastName);
-                        ps.setString(4, address);
-                        ps.setString(5, city);
-                        ps.setString(6, state);
-                        ps.setInt(7, Integer.parseInt(zip));
-                        ps.executeUpdate();
-                        
-                        query = "SELECT * FROM Customer";
-                        ps = conn.prepareStatement(query);
-                        res = ps.executeQuery();
-                        int accountNo = 1;
-
-                        if (res.next())
-                        {
-                            res.last();
-                            accountNo = res.getInt("AccountNo") + 1;
-                        }
-                        
-                        query = "INSERT INTO Customer VALUES (?, ?, ?, ?, NOW(), ?, ?)";
-                        ps = conn.prepareStatement(query);
-                        ps.setInt(1, id);
-                        ps.setInt(2, accountNo);
-                        ps.setString(3, creditCardNo);
-                        ps.setString(4, email);
-                        if (rating.trim().equals(""))
-                            ps.setString(5, null);
-                        else
-                            ps.setInt(5, Integer.parseInt(rating));
-                        ps.setString(6, password);
-                        ps.executeUpdate();
-                        
-                        query = "INSERT INTO Passenger VALUES (?, ?)";
-                        ps = conn.prepareStatement(query);
-                        ps.setInt(1, id);
-                        ps.setInt(2, accountNo);
-                        ps.executeUpdate();
-                        
-                        conn.commit();
-                }
-                // update customer
-                else if (request.getParameter("optionsRadios").equals(""))
-                {
-                        String accountNo = request.getParameter("accountNo");
-                        String creditCardNo = request.getParameter("creditCardNo");
-                        String email = request.getParameter("email");
-                        String rating = request.getParameter("rating");
-                        String password = request.getParameter("password");
-
-                        String query;
-                        PreparedStatement ps;
-
-                        if (!creditCardNo.trim().equals(""))
-                        {
-                            query = "UPDATE Customer SET CreditCardNo = ? WHERE AccountNo = ?";
-                            ps = conn.prepareStatement(query);
-                            ps.setString(1, creditCardNo);
-                            ps.setInt(2, Integer.parseInt(accountNo));
-                            ps.executeUpdate();
-                            conn.commit();
-                        }
-
-                        if (!email.trim().equals(""))
-                        {
-                            query = "UPDATE Customer SET Email = ? WHERE AccountNo = ?";
-                            ps = conn.prepareStatement(query);
-                            ps.setString(1, email);
-                            ps.setInt(2, Integer.parseInt(accountNo));
-                            ps.executeUpdate();
-                            conn.commit();
-                        }
-                        
-                        if (!rating.trim().equals(""))
-                        {
-                            query = "UPDATE Customer SET Rating = ? WHERE AccountNo = ?";
-                            ps = conn.prepareStatement(query);
-                            ps.setInt(1, Integer.parseInt(rating));
-                            ps.setInt(2, Integer.parseInt(accountNo));
-                            ps.executeUpdate();
-                            conn.commit();
-                        }
-                        
-                        if (!password.trim().equals(""))
-                        {
-                            query = "UPDATE Customer SET Password = ? WHERE AccountNo = ?";
-                            ps = conn.prepareStatement(query);
-                            ps.setString(1, password);
-                            ps.setInt(2, Integer.parseInt(accountNo));
-                            ps.executeUpdate();
-                            conn.commit();
-                        }
-                }
-                // delete customer
-                else if (request.getParameter("optionsRadios").equals(""))
-                {
-                        String accountNo = request.getParameter("accountNo");
-
-                        String query = "DELETE FROM Customer WHERE AccountNo = ?";
-                        PreparedStatement ps = conn.prepareStatement(query);
-                        ps.setInt(1, Integer.parseInt(accountNo));
-                        ps.executeUpdate();
-                        conn.commit();
-                }
-                // produce customer mailing lists
-                else if (request.getParameter("optionsRadios").equals(""))
-                {
-                    String query = "SELECT P.FirstName, P.LastName, C.Email, P.Address, P.City, "
-                                    + "P.State, P.ZipCode\n" +
-                                    "FROM Person P, Customer C\n" +
-                                    "WHERE P.Id = C.Id";
+                    String resrNo = request.getParameter("resrNo");
+                    
+                    String query = "DELETE FROM Legs WHERE ResrNo = ?";
                     PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setInt(1, Integer.parseInt(resrNo));
+                    ps.executeUpdate();
+                    
+                    query = "DELETE FROM ReservationPassenger WHERE ResrNo = ?";
+                    ps = conn.prepareStatement(query);
+                    ps.setInt(1, Integer.parseInt(resrNo));
+                    ps.executeUpdate();
+                    
+                    query = "DELETE FROM Reservation WHERE ResrNo = ?";
+                    ps = conn.prepareStatement(query);
+                    ps.setInt(1, Integer.parseInt(resrNo));
+                    ps.executeUpdate();
+                    
+                    conn.commit();
+                }
+                // view customer's current reservations
+                if (request.getParameter("optionsRadios").equals(""))
+                {
+                    String accountNo = request.getParameter("accountNo");
+                    
+                    String query = "SELECT * FROM Reservation R\n" +
+                                   "WHERE EXISTS (\n" +
+                                   "	SELECT * FROM Legs L, StopsAt S\n" +
+                                   "	WHERE (R.ResrNo = L.ResrNo AND L.AirlineID = S.AirlineID\n" +
+                                   "	AND L.FlightNo = S.FlightNo AND L.FromStopNo = S.StopNo\n" +
+                                   "	AND S.DepTime >= NOW())\n" +
+                                   "	AND R.AccountNo = ?)";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setInt(1, Integer.parseInt(accountNo));
                     ResultSet res = ps.executeQuery();
                     
                     json += "{\"data\":[";
 
                     while (res.next())
                     {
-                        json += "{\"firstName\": \"" + res.getString("FirstName") + "\","
-                                + "\"lastName\": \"" + res.getString("LastName") + "\","
-                                + "\"email\": \"" + res.getString("Email") + "\","
-                                + "\"address\": \"" + res.getString("Address") + "\","
-                                + "\"city\": \"" + res.getString("City") + "\","
-                                + "\"state\": \"" + res.getString("State") + "\","
-                                + "\"zipCode\": \"" + res.getInt("ZipCode") + "\"},";
+                        json += "{\"resrNo\": \"" + res.getInt("ResrNo") + "\","
+                                + "\"resrDate\": \"" + res.getString("ResrDate") + "\","
+                                + "\"bookingFee\": \"" + res.getDouble("BookingFee") + "\","
+                                + "\"totalFare\": \"" + res.getDouble("TotalFare") + "\","
+                                + "\"repSSN\": \"" + res.getInt("RepSSN") + "\","
+                                + "\"accountNo\": \"" + res.getInt("AccountNo") + "\",";
                     }
                     
                     json = json.substring(0, json.length()-1);
@@ -326,7 +222,177 @@ public class CustomerRepServlet extends HttpServlet {
 
                     out.print(json);
                 }
-                // produce list of flight suggestions
+                // travel itinerary for given reservation
+                if (request.getParameter("optionsRadios").equals(""))
+                {
+                    String resrNo = request.getParameter("resrNo");
+                    
+                    String query = "SELECT L.ResrNo, L.AirlineID, L.FlightNo, A.Name AS Airport, "
+                                   + "S.ArrTime, S.DepTime\n" +
+                                   "FROM Legs L, StopsAt S, Airport A\n" +
+                                   "WHERE (L.AirlineID = S.AirlineID AND L.FlightNo = S.FlightNo\n" +
+                                   "AND L.FromStopNo = S.StopNo AND S.AirportID = A.Id\n" +
+                                   "AND L.ResrNo = ?)";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setInt(1, Integer.parseInt(resrNo));
+                    ResultSet res = ps.executeQuery();
+                    
+                    json += "{\"data\":[";
+
+                    while (res.next())
+                    {
+                        json += "{\"resrNo\": \"" + res.getInt("ResrNo") + "\","
+                                + "\"airlineID\": \"" + res.getString("AirlineID") + "\","
+                                + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
+                                + "\"airport\": \"" + res.getString("Airport") + "\","
+                                + "\"arrTime\": \"" + res.getString("ArrTime") + "\","
+                                + "\"depTime\": \"" + res.getString("DepTime") + "\",";
+                    }
+                    
+                    json = json.substring(0, json.length()-1);
+                    json += "]}";
+
+                    System.out.println(json);
+
+                    out.print(json);
+                }
+                // customer's current bid on given reverse auction
+                if (request.getParameter("optionsRadios").equals(""))
+                {
+                    String accountNo = request.getParameter("accountNo");
+                    String airlineID = request.getParameter("airlineID");
+                    String flightNo = request.getParameter("flightNo");
+                    String seatClass = request.getParameter("seatClass");
+                    
+                    String query = "SELECT * FROM Auctions\n" +
+                                   "WHERE (AccountNo = ? AND AirlineID = ? AND FlightNo = ?\n" +
+                                   "AND Class = ?)\n" +
+                                   "ORDER BY BidDate DESC LIMIT 0,1";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setInt(1, Integer.parseInt(accountNo));
+                    ps.setString(2, airlineID);
+                    ps.setInt(3, Integer.parseInt(flightNo));
+                    ps.setString(4, seatClass);
+                    ResultSet res = ps.executeQuery();
+                    
+                    json += "{\"data\":[";
+
+                    while (res.next())
+                    {
+                        json += "{\"accountNo\": \"" + res.getInt("AccountNo") + "\","
+                                + "\"airlineID\": \"" + res.getString("AirlineID") + "\","
+                                + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
+                                + "\"class\": \"" + res.getString("Class") + "\","
+                                + "\"bidDate\": \"" + res.getString("BidDate") + "\","
+                                + "\"nYOP\": \"" + res.getDouble("NYOP") + "\","
+                                // this is tricky --- could be boolean or int (need to test what happens)
+                                + "\"accepted\": \"" + res.getBoolean("Accepted") + "\",";
+                    }
+                    
+                    json = json.substring(0, json.length()-1);
+                    json += "]}";
+
+                    System.out.println(json);
+
+                    out.print(json);
+                }
+                // bid history for given reverse auction
+                if (request.getParameter("optionsRadios").equals(""))
+                {
+                    String accountNo = request.getParameter("accountNo");
+                    String airlineID = request.getParameter("airlineID");
+                    String flightNo = request.getParameter("flightNo");
+                    String seatClass = request.getParameter("seatClass");
+                    
+                    String query = "SELECT * FROM Auctions\n" +
+                                   "WHERE (AccountNo = ? AND AirlineID = ? AND FlightNo = ?\n" +
+                                   "AND Class = ?)\n" +
+                                    "ORDER BY BidDate DESC";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setInt(1, Integer.parseInt(accountNo));
+                    ps.setString(2, airlineID);
+                    ps.setInt(3, Integer.parseInt(flightNo));
+                    ps.setString(4, seatClass);
+                    ResultSet res = ps.executeQuery();
+                    
+                    json += "{\"data\":[";
+
+                    while (res.next())
+                    {
+                        json += "{\"accountNo\": \"" + res.getInt("AccountNo") + "\","
+                                + "\"airlineID\": \"" + res.getString("AirlineID") + "\","
+                                + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
+                                + "\"class\": \"" + res.getString("Class") + "\","
+                                + "\"bidDate\": \"" + res.getString("BidDate") + "\","
+                                + "\"nYOP\": \"" + res.getDouble("NYOP") + "\","
+                                // this is tricky --- could be boolean or int (need to test what happens)
+                                + "\"accepted\": \"" + res.getBoolean("Accepted") + "\",";
+                    }
+                    
+                    json = json.substring(0, json.length()-1);
+                    json += "]}";
+
+                    System.out.println(json);
+
+                    out.print(json);
+                }
+                // history of customer's current and past reservations
+                if (request.getParameter("optionsRadios").equals(""))
+                {
+                    String accountNo = request.getParameter("accountNo");
+                    
+                    String query = "SELECT * FROM Reservation WHERE AccountNo = ?";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ps.setInt(1, Integer.parseInt(accountNo));
+                    ResultSet res = ps.executeQuery();
+                    
+                    json += "{\"data\":[";
+
+                    while (res.next())
+                    {
+                        json += "{\"resrNo\": \"" + res.getInt("ResrNo") + "\","
+                                + "\"resrDate\": \"" + res.getString("ResrDate") + "\","
+                                + "\"bookingFee\": \"" + res.getDouble("BookingFee") + "\","
+                                + "\"totalFare\": \"" + res.getDouble("TotalFare") + "\","
+                                + "\"repSSN\": \"" + res.getInt("RepSSN") + "\","
+                                + "\"accountNo\": \"" + res.getInt("AccountNo") + "\",";
+                    }
+                    
+                    json = json.substring(0, json.length()-1);
+                    json += "]}";
+
+                    System.out.println(json);
+
+                    out.print(json);
+                }
+                // best-seller list of flights
+                if (request.getParameter("optionsRadios").equals(""))
+                {
+                    String query = "SELECT L.AirlineID, L.FlightNo, COUNT(DISTINCT L.ResrNo) AS "
+                                   + "ResrCount\n" +
+                                   "FROM Legs L\n" +
+                                   "GROUP BY L.AirlineID, L.FlightNo\n" +
+                                   "ORDER BY ResrCount DESC, L.AirlineID ASC, L.FlightNo ASC";
+                    PreparedStatement ps = conn.prepareStatement(query);
+                    ResultSet res = ps.executeQuery();
+                    
+                    json += "{\"data\":[";
+
+                    while (res.next())
+                    {
+                        json += "{\"airlineID\": \"" + res.getString("AirlineID") + "\","
+                                + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
+                                + "\"resrCount\": \"" + res.getInt("ResrCount") + "\",";
+                    }
+                    
+                    json = json.substring(0, json.length()-1);
+                    json += "]}";
+
+                    System.out.println(json);
+
+                    out.print(json);
+                }
+                // personalized flight suggestion list
                 else if (request.getParameter("optionsRadios").equals(""))
                 {
                     String accountNo = request.getParameter("accountNo");
@@ -416,60 +482,22 @@ public class CustomerRepServlet extends HttpServlet {
 
                     out.print(json);
                 }
-                // view current bids that have yet to be approved or denied
-                else if (request.getParameter("optionsRadios").equals(""))
-                {
-                    String query = "SELECT * FROM Auctions WHERE Accepted = NULL";
-                    PreparedStatement ps = conn.prepareStatement(query);
-                    ResultSet res = ps.executeQuery();
-                    
-                    json += "{\"data\":[";
-
-                    while (res.next())
-                    {
-                        json += "{\"accountNo\": \"" + res.getInt("AccountNo") + "\","
-                                + "\"airlineID\": \"" + res.getString("AirlineID") + "\","
-                                + "\"flightNo\": \"" + res.getInt("FlightNo") + "\","
-                                + "\"class\": \"" + res.getString("Class") + "\","
-                                + "\"bidDate\": \"" + res.getString("BidDate") + "\","
-                                + "\"nYOP\": \"" + res.getDouble("NYOP") + "\","
-                                // this is tricky --- could be boolean or int (need to test what happens)
-                                + "\"accepted\": \"" + res.getBoolean("Accepted") + "\",";
-                    }
-                    
-                    json = json.substring(0, json.length()-1);
-                    json += "]}";
-
-                    System.out.println(json);
-
-                    out.print(json);
-                }
-                // approve or deny current bids
+                // place bid in reverse auction
                 else if (request.getParameter("optionsRadios").equals(""))
                 {
                     String accountNo = request.getParameter("accountNo");
                     String airlineID = request.getParameter("airlineID");
                     String flightNo = request.getParameter("flightNo");
                     String seatClass = request.getParameter("seatClass");
-                    String bidDate = request.getParameter("bidDate");
-                    String acceptedString = request.getParameter("accepted");
-                    boolean accepted;
-                    if (acceptedString.toUpperCase().equals("YES"))
-                        accepted = true;
-                    else
-                        accepted = false;
+                    String nYOP = request.getParameter("nYOP");
                     
-                    String query = "UPDATE Auctions\n" +
-                                   "SET Accepted = ?\n" +
-                                   "WHERE (AccountNo = ? AND AirlineID = ? AND FlightNo = ?"
-                                   + "AND Class = ? AND BidDate = ?)";
+                    String query = "INSERT INTO Auctions VALUES (?, ?, ?, ?, NOW(), ?, NULL)";
                     PreparedStatement ps = conn.prepareStatement(query);
-                    ps.setBoolean(1, accepted);
-                    ps.setInt(2, Integer.parseInt(accountNo));
-                    ps.setString(3, airlineID);
-                    ps.setInt(4, Integer.parseInt(flightNo));
-                    ps.setString(5, seatClass);
-                    ps.setString(6, bidDate);
+                    ps.setInt(1, Integer.parseInt(accountNo));
+                    ps.setString(2, airlineID);
+                    ps.setInt(3, Integer.parseInt(flightNo));
+                    ps.setString(4, seatClass);
+                    ps.setDouble(5, Double.parseDouble(nYOP));
                     ps.executeUpdate();
                     
                     conn.commit();
