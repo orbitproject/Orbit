@@ -40,9 +40,10 @@
                     <h2 class="content-subhead">Reserve a Flight</h2>
 
 
-                    <form class="pure-form pure-form-stacked" method="POST" action='signup'> <!-- TODO: add servlet to post to -->
+                    <form class="pure-form pure-form-stacked">
                         <fieldset>
                             <legend>Enter details below</legend>
+                            <input type="hidden" id="passCount" name="passCount" value="0"/>
 
                             <!--
                                 things user enters:
@@ -114,13 +115,15 @@
                                                 //$("#passenger-list").append("<div id='pass" + passcount + "'><fieldset class='pure-group'><input type='text' class='' placeholder='First name'><input type='text' class='' placeholder='Last name'><input type='text' class='' placeholder='Telephone'></fieldset><button class='pure-button-secondary' id='remove-btn" + passcount + "' onclick='removePassengerField(" + passcount + ")'>Remove</button></div>"); 
                                                 $("#passenger-list").append("<div id='pass" + passcount + "'><fieldset class='pure-group'><input type='text' class='' placeholder='First name'><input type='text' class='' placeholder='Last name'><input type='text' class='' placeholder='Telephone'></fieldset></div>");
                                                 passcount += 1;
+                                                $("#passCount").val(passcount);
                                             }
 
                                             function removePassengerField() {
                                                 //$("#pass0").remove();
                                                 if (passcount > 1) {
                                                     $("#pass" + (passcount-1)).remove();
-                                                    passcount -= 1; 
+                                                    passcount -= 1;
+                                                    $("#passCount").val(passcount);
                                                 }
                                                 //$(this).remove(); 
                                                 //$("#pass" + i).remove(); 
