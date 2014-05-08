@@ -467,6 +467,253 @@ $(document).ready(function() {
             return false;
         });
     });
+    
+    $(function() {
+        $('#testForm').submit(function() {
+            $.post('customerrep', $(this).serialize(), function(jsonData) {
+                var parsedJSON = jQuery.parseJSON(jsonData);
+                var rowInfo;
+                
+                if ($('#recordResr').is(':checked'))
+                {
+                    $('#testTable').html("");
+                    
+                    // returns nothing
+                }
+                else if ($('#addCust').is(':checked'))
+                {
+                    $('#testTable').html("");
+                    
+                    // returns nothing
+                }
+                else if ($('#updateCust').is(':checked'))
+                {
+                    $('#testTable').html("");
+                    
+                    // returns nothing
+                }
+                if ($('#deleteCust').is(':checked'))
+                {
+                    $('#testTable').html("");
+                    
+                    // returns nothing
+                }
+                else if ($('#mailingLists').is(':checked'))
+                {
+                    $('#testTable').html("");
+                    
+                    $('#testTable').append("<thead><tr><th>FirstName</th><th>LastName</th>\n\
+                        <th>Email</th><th>Address</th><th>City</th><th>State</th>\n\
+                        <th>ZipCode</th></tr></thead>");
+
+                    for (var i = 0; i < parsedJSON.data.length; i++)
+                    {
+                        rowInfo = parsedJSON.data[i];
+
+                        $('#testTable').append('<tr><td>' + rowInfo.firstName + '</td><td>' + 
+                            rowInfo.lastName + '</td><td>' + rowInfo.email + '</td><td>' +
+                            rowInfo.address + '</td><td>' + rowInfo.city + '</td><td>' +
+                            rowInfo.state + '</td><td>' + rowInfo.zipCode + '</td></tr>');
+                    }
+                }
+                else if ($('#flightSuggest').is(':checked'))
+                {
+                    $('#testTable').html("");
+                    
+                    $('#testTable').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
+                        <th>LegNo</th><th>DepTime</th><th>FromAirport</th><th>ArrTime</th>\n\
+                        <th>toAirport</th></tr></thead>");
+
+                    for (var i = 0; i < parsedJSON.data.length; i++)
+                    {
+                        rowInfo = parsedJSON.data[i];
+
+                        $('#testTable').append('<tr><td>' + rowInfo.airlineID + '</td><td>' + 
+                            rowInfo.flightNo + '</td><td>' + rowInfo.legNo + '</td><td>' +
+                            rowInfo.depTime + '</td><td>' + rowInfo.fromAirport + '</td><td>' +
+                            rowInfo.arrTime + '</td><td>' + rowInfo.toAirport + '</td></tr>');
+                    }
+                }
+                else if ($('#viewBids').is(':checked'))
+                {
+                    $('#testTable').html("");
+                    
+                    $('#testTable').append("<thead><tr><th>AccountNo</th><th>AirlineID</th>\n\
+                        <th>FlightNo</th><th>Class</th><th>BidDate</th><th>NYOP</th>\n\
+                        <th>Accepted</th></tr></thead>");
+
+                    for (var i = 0; i < parsedJSON.data.length; i++)
+                    {
+                        rowInfo = parsedJSON.data[i];
+
+                        $('#testTable').append('<tr><td>' + rowInfo.accountNo + '</td><td>' + 
+                            rowInfo.airlineID + '</td><td>' + rowInfo.flightNo + '</td><td>' +
+                            rowInfo.class + '</td><td>' + rowInfo.bidDate + '</td><td>' +
+                            rowInfo.nYOP + '</td><td>' + rowInfo.accepted + '</td></tr>');
+                    }
+                }
+                else if ($('#approveOrDeny').is(':checked'))
+                {
+                     $('#testTable').html("");
+                    
+                    // returns nothing
+                }
+            });
+            return false;
+        });
+    });
+    
+    $(function() {
+        $('#testForm').submit(function() {
+            $.post('customer', $(this).serialize(), function(jsonData) {
+                var parsedJSON = jQuery.parseJSON(jsonData);
+                var rowInfo;
+                
+                if ($('#makeResr').is(':checked'))
+                {
+                     $('#testTable').html("");
+                    
+                    // returns nothing
+                }
+                else if ($('#cancelResr').is(':checked'))
+                {
+                     $('#testTable').html("");
+                    
+                    // returns nothing
+                }
+                else if ($('#viewResr').is(':checked'))
+                {
+                    $('#testTable').html("");
+                    
+                    $('#testTable').append("<thead><tr><th>ResrNo</th><th>ResrDate</th>\n\
+                        <th>BookingFee</th><th>TotalFare</th><th>RepSSN</th><th>AccountNo</th>\n\
+                        </tr></thead>");
+
+                    for (var i = 0; i < parsedJSON.data.length; i++)
+                    {
+                        rowInfo = parsedJSON.data[i];
+
+                        $('#testTable').append('<tr><td>' + rowInfo.resrNo + '</td><td>' + 
+                            rowInfo.resrDate + '</td><td>' + rowInfo.bookingFee + '</td><td>' +
+                            rowInfo.totalFare + '</td><td>' + rowInfo.repSSN + '</td><td>' +
+                            rowInfo.accountNo + '</td></tr>');
+                    }
+                }
+                else if ($('#travelItin').is(':checked'))
+                {
+                    $('#testTable').html("");
+                    
+                    $('#testTable').append("<thead><tr><th>ResrNo</th><th>AirlineID</th>\n\
+                        <th>FlightNo</th><th>Departing</th><th>Arriving</th><th>DepTime</th>\n\
+                        <th>ArrTime</th></tr></thead>");
+
+                    for (var i = 0; i < parsedJSON.data.length; i++)
+                    {
+                        rowInfo = parsedJSON.data[i];
+
+                        $('#testTable').append('<tr><td>' + rowInfo.resrNo + '</td><td>' + 
+                            rowInfo.airlineID + '</td><td>' + rowInfo.flightNo + '</td><td>' +
+                            rowInfo.departing + '</td><td>' + rowInfo.arriving + '</td><td>' +
+                            rowInfo.depTime + '</td><td>' + rowInfo.arrTime + '</td></tr>');
+                    }
+                }
+                else if ($('#viewCurrBid').is(':checked'))
+                {
+                    $('#testTable').html("");
+                    
+                    $('#testTable').append("<thead><tr><th>AccountNo</th><th>AirlineID</th>\n\
+                        <th>FlightNo</th><th>Class</th><th>BidDate</th><th>NYOP</th>\n\
+                        <th>Accepted</th></tr></thead>");
+
+                    for (var i = 0; i < parsedJSON.data.length; i++)
+                    {
+                        rowInfo = parsedJSON.data[i];
+
+                        $('#testTable').append('<tr><td>' + rowInfo.accountNo + '</td><td>' + 
+                            rowInfo.airlineID + '</td><td>' + rowInfo.flightNo + '</td><td>' +
+                            rowInfo.class + '</td><td>' + rowInfo.bidDate + '</td><td>' +
+                            rowInfo.nYOP + '</td><td>' + rowInfo.accepted + '</td></tr>');
+                    }
+                }
+                 else if ($('#viewBidHist').is(':checked'))
+                {
+                    $('#testTable').html("");
+                    
+                    $('#testTable').append("<thead><tr><th>AccountNo</th><th>AirlineID</th>\n\
+                        <th>FlightNo</th><th>Class</th><th>BidDate</th><th>NYOP</th>\n\
+                        <th>Accepted</th></tr></thead>");
+
+                    for (var i = 0; i < parsedJSON.data.length; i++)
+                    {
+                        rowInfo = parsedJSON.data[i];
+
+                        $('#testTable').append('<tr><td>' + rowInfo.accountNo + '</td><td>' + 
+                            rowInfo.airlineID + '</td><td>' + rowInfo.flightNo + '</td><td>' +
+                            rowInfo.class + '</td><td>' + rowInfo.bidDate + '</td><td>' +
+                            rowInfo.nYOP + '</td><td>' + rowInfo.accepted + '</td></tr>');
+                    }
+                }
+                 else if ($('#viewResrHist').is(':checked'))
+                {
+                    $('#testTable').html("");
+                    
+                    $('#testTable').append("<thead><tr><th>ResrNo</th><th>ResrDate</th>\n\
+                        <th>BookingFee</th><th>TotalFare</th><th>RepSSN</th><th>AccountNo</th>\n\
+                        </tr></thead>");
+
+                    for (var i = 0; i < parsedJSON.data.length; i++)
+                    {
+                        rowInfo = parsedJSON.data[i];
+
+                        $('#testTable').append('<tr><td>' + rowInfo.resrNo + '</td><td>' + 
+                            rowInfo.resrDate + '</td><td>' + rowInfo.bookingFee + '</td><td>' +
+                            rowInfo.totalFare + '</td><td>' + rowInfo.repSSN + '</td><td>' +
+                            rowInfo.accountNo + '</td></tr>');
+                    }
+                }
+                 else if ($('#viewBestSell').is(':checked'))
+                {
+                    $('#testTable').html("");
+                    
+                    $('#testTable').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
+                        <th>ResrCount</th></tr></thead>");
+
+                    for (var i = 0; i < parsedJSON.data.length; i++)
+                    {
+                        rowInfo = parsedJSON.data[i];
+
+                        $('#testTable').append('<tr><td>' + rowInfo.airlineID + '</td><td>' + 
+                            rowInfo.flightNo + '</td><td>' + rowInfo.resrCount + '</td></tr>');
+                    }
+                }
+                else if ($('#flightSuggest').is(':checked'))
+                {
+                    $('#testTable').html("");
+                    
+                    $('#testTable').append("<thead><tr><th>AirlineID</th><th>FlightNo</th>\n\
+                        <th>LegNo</th><th>DepTime</th><th>FromAirport</th><th>ArrTime</th>\n\
+                        <th>toAirport</th></tr></thead>");
+
+                    for (var i = 0; i < parsedJSON.data.length; i++)
+                    {
+                        rowInfo = parsedJSON.data[i];
+
+                        $('#testTable').append('<tr><td>' + rowInfo.airlineID + '</td><td>' + 
+                            rowInfo.flightNo + '</td><td>' + rowInfo.legNo + '</td><td>' +
+                            rowInfo.depTime + '</td><td>' + rowInfo.fromAirport + '</td><td>' +
+                            rowInfo.arrTime + '</td><td>' + rowInfo.toAirport + '</td></tr>');
+                    }
+                }
+                else if ($('#placeBid').is(':checked'))
+                {
+                     $('#testTable').html("");
+                    
+                    // returns nothing
+                }
+            });
+            return false;
+        });
+    });
 });
 
 function makeRequest(request, response) {

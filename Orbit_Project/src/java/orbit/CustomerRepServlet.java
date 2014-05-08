@@ -58,9 +58,18 @@ public class CustomerRepServlet extends HttpServlet {
                 conn.setAutoCommit(false);
                 
                 // record reservation
-                if (request.getParameter("optionsRadios").equals(""))
+                if (request.getParameter("optionsRadios").equals("recordResr"))
                 {
                     String passCount = request.getParameter("passCount");
+                    // javascript variable that keeps track of how many legs
+                    // are in this flight in order to know how many times
+                    // to insert reservation into legs table
+                    // passed to servlet via hidden input element
+                    // make sure it starts from 1 instead of 0 for clarity, since
+                    // there is actually a leg number 1 and not a leg number 0
+                    String legCount = request.getParameter("legCount");
+                    String airlineID = request.getParameter("airlineID");
+                    String flightNo = request.getParameter("flightNo");
                     String accountNo = request.getParameter("accountNo");
                     String bookingFee = request.getParameter("bookingFee");
                     String totalFare = request.getParameter("totalFare");
@@ -88,6 +97,22 @@ public class CustomerRepServlet extends HttpServlet {
                     ps.setInt(4, Integer.parseInt(repSSN));
                     ps.setInt(5, Integer.parseInt(accountNo));
                     ps.executeUpdate();
+                    
+                    for (int i = 1; i <= Integer.parseInt(legCount); i++)
+                    {
+                        String legNo = request.getParameter("legNo" + i);
+                        String fromStopNo = request.getParameter("fromStopNo" + i);
+                        String depDate = request.getParameter("depDate" + i);
+                        
+                        query = "INSERT INTO Legs VALUES (?, ?, ?, ?, ?, ?)";
+                        ps = conn.prepareStatement(query);
+                        ps.setInt(1, resrNo);
+                        ps.setInt(2, Integer.parseInt(legNo));
+                        ps.setString(3, airlineID);
+                        ps.setInt(4, Integer.parseInt(flightNo));
+                        ps.setInt(5, Integer.parseInt(fromStopNo));
+                        ps.setString(6, depDate);
+                    }
                     
                     // retrieve the id of the customer under whose account this reservation
                     // is being made
@@ -166,9 +191,20 @@ public class CustomerRepServlet extends HttpServlet {
                     }
                 }
                 // add customer
-                else if (request.getParameter("optionsRadios").equals(""))
+                else if (request.getParameter("optionsRadios").equals("addCust"))
                 {
-                        String firstName = request.getParameter("firstName");
+                        String firstName = "Bob";
+                        String lastName = "Reynolds";
+                        String address = "231 Oak St";
+                        String city = "Stony Brook";
+                        String state = "New York";
+                        String zip = "11742";
+                        String creditCardNo = "1234567891234567";
+                        String email = "bob.reynolds@gmail.com";
+                        String rating = "5";
+                        String password = "test";
+                        
+                        /*String firstName = request.getParameter("firstName");
                         String lastName = request.getParameter("lastName");
                         String address = request.getParameter("address");
                         String city = request.getParameter("city");
@@ -177,7 +213,7 @@ public class CustomerRepServlet extends HttpServlet {
                         String creditCardNo = request.getParameter("creditCardNo");
                         String email = request.getParameter("email");
                         String rating = request.getParameter("rating");
-                        String password = request.getParameter("password");
+                        String password = request.getParameter("password");*/
                         
                         String query = "SELECT * FROM Person";
                         PreparedStatement ps = conn.prepareStatement(query);
@@ -234,13 +270,18 @@ public class CustomerRepServlet extends HttpServlet {
                         conn.commit();
                 }
                 // update customer
-                else if (request.getParameter("optionsRadios").equals(""))
+                else if (request.getParameter("optionsRadios").equals("updateCust"))
                 {
-                        String accountNo = request.getParameter("accountNo");
+                        String accountNo = "2006";
+                        String creditCardNo = "";
+                        String email = "";
+                        String rating = "6";
+                        String password = "";
+                        /*String accountNo = request.getParameter("accountNo");
                         String creditCardNo = request.getParameter("creditCardNo");
                         String email = request.getParameter("email");
                         String rating = request.getParameter("rating");
-                        String password = request.getParameter("password");
+                        String password = request.getParameter("password");*/
 
                         String query;
                         PreparedStatement ps;
@@ -286,9 +327,10 @@ public class CustomerRepServlet extends HttpServlet {
                         }
                 }
                 // delete customer
-                else if (request.getParameter("optionsRadios").equals(""))
+                else if (request.getParameter("optionsRadios").equals("deleteCust"))
                 {
-                        String accountNo = request.getParameter("accountNo");
+                        String accountNo = "2006";
+                        //String accountNo = request.getParameter("accountNo");
 
                         String query = "DELETE FROM Customer WHERE AccountNo = ?";
                         PreparedStatement ps = conn.prepareStatement(query);
@@ -297,7 +339,7 @@ public class CustomerRepServlet extends HttpServlet {
                         conn.commit();
                 }
                 // produce customer mailing lists
-                else if (request.getParameter("optionsRadios").equals(""))
+                else if (request.getParameter("optionsRadios").equals("mailingLists"))
                 {
                     String query = "SELECT P.FirstName, P.LastName, C.Email, P.Address, P.City, "
                                     + "P.State, P.ZipCode\n" +
@@ -327,9 +369,10 @@ public class CustomerRepServlet extends HttpServlet {
                     out.print(json);
                 }
                 // produce list of flight suggestions
-                else if (request.getParameter("optionsRadios").equals(""))
+                else if (request.getParameter("optionsRadios").equals("flightSuggest"))
                 {
-                    String accountNo = request.getParameter("accountNo");
+                    String accountNo = "2001";
+                    //String accountNo = request.getParameter("accountNo");
                     
                     String query = "DROP VIEW FlightSchedule";
                     PreparedStatement ps = conn.prepareStatement(query);
@@ -391,7 +434,7 @@ public class CustomerRepServlet extends HttpServlet {
                             "WHERE (F1.AirlineID = F2.AirlineID AND F1.FlightNo = F2.FlightNo "
                             + "AND F2.ToAirport = C.DestAirport \n" +
                             "AND NOT (F1.AirlineID = C.AirlineID AND F1.FlightNo = C.FlightNo)  \n" +
-                            "AND F1.DepTime > NOW() AND C.AccountNo = ?)";
+                            "AND F1.DepTime > '2011-01-01 00:00:00' AND C.AccountNo = ?)";
                     ps = conn.prepareStatement(query);
                     ps.setInt(1, Integer.parseInt(accountNo));
                     ResultSet res = ps.executeQuery();
@@ -417,9 +460,9 @@ public class CustomerRepServlet extends HttpServlet {
                     out.print(json);
                 }
                 // view current bids that have yet to be approved or denied
-                else if (request.getParameter("optionsRadios").equals(""))
+                else if (request.getParameter("optionsRadios").equals("viewBids"))
                 {
-                    String query = "SELECT * FROM Auctions WHERE Accepted = NULL";
+                    String query = "SELECT * FROM Auctions WHERE Accepted IS NULL";
                     PreparedStatement ps = conn.prepareStatement(query);
                     ResultSet res = ps.executeQuery();
                     
@@ -434,7 +477,7 @@ public class CustomerRepServlet extends HttpServlet {
                                 + "\"bidDate\": \"" + res.getString("BidDate") + "\","
                                 + "\"nYOP\": \"" + res.getDouble("NYOP") + "\","
                                 // this is tricky --- could be boolean or int (need to test what happens)
-                                + "\"accepted\": \"" + res.getBoolean("Accepted") + "\",";
+                                + "\"accepted\": \"" + res.getString("Accepted") + "\"},";
                     }
                     
                     json = json.substring(0, json.length()-1);
@@ -445,9 +488,20 @@ public class CustomerRepServlet extends HttpServlet {
                     out.print(json);
                 }
                 // approve or deny current bids
-                else if (request.getParameter("optionsRadios").equals(""))
+                else if (request.getParameter("optionsRadios").equals("approveOrDeny"))
                 {
-                    String accountNo = request.getParameter("accountNo");
+                    String accountNo = "2003";
+                    String airlineID = "DA";
+                    String flightNo = "123";
+                    String seatClass = "Economy";
+                    String bidDate = "2014-05-07 19:16:19";
+                    String acceptedString = "yes";
+                    boolean accepted;
+                    if (acceptedString.toUpperCase().equals("YES"))
+                        accepted = true;
+                    else
+                        accepted = false;
+                    /*String accountNo = request.getParameter("accountNo");
                     String airlineID = request.getParameter("airlineID");
                     String flightNo = request.getParameter("flightNo");
                     String seatClass = request.getParameter("seatClass");
@@ -457,11 +511,11 @@ public class CustomerRepServlet extends HttpServlet {
                     if (acceptedString.toUpperCase().equals("YES"))
                         accepted = true;
                     else
-                        accepted = false;
+                        accepted = false;*/
                     
                     String query = "UPDATE Auctions\n" +
                                    "SET Accepted = ?\n" +
-                                   "WHERE (AccountNo = ? AND AirlineID = ? AND FlightNo = ?"
+                                   "WHERE (AccountNo = ? AND AirlineID = ? AND FlightNo = ?\n"
                                    + "AND Class = ? AND BidDate = ?)";
                     PreparedStatement ps = conn.prepareStatement(query);
                     ps.setBoolean(1, accepted);
